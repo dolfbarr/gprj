@@ -1,4 +1,7 @@
 import {expect, test} from '@oclif/test'
+import chalk from 'chalk'
+
+chalk.level = 0
 
 describe('hello', () => {
   test
