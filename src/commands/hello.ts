@@ -1,4 +1,5 @@
 import {Command, flags} from '@oclif/command'
+import {getDB} from '../utils/database'
 import {Logger} from '../utils/renderer'
 
 export default class Hello extends Command {
@@ -23,6 +24,10 @@ hello world from ./src/hello.ts!
   async run() {
     const {args, flags} = this.parse(Hello)
     const {info, done} = new Logger(this.log)
+
+    const db = await getDB(this.config.dataDir)
+
+    info('Found repositories: ' + JSON.stringify(db.get('repositories'), null, 2))
 
     const name = flags.name ?? 'world'
     info(`hello ${name} from ./src/commands/hello.ts`)

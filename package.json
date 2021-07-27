@@ -13,15 +13,18 @@
     "@oclif/plugin-help": "^3",
     "chalk": "4.1.1",
     "figures": "3.2.0",
+    "lowdb": "1.0.0",
     "tslib": "^1"
   },
   "devDependencies": {
     "@oclif/dev-cli": "^1",
     "@oclif/test": "^1",
     "@types/chai": "^4",
+    "@types/lowdb": "^1.0.11",
     "@types/mocha": "^5",
     "@types/node": "^10",
     "chai": "^4",
+    "cross-env": "^7.0.3",
     "eslint": "^5.13",
     "eslint-config-oclif": "^3.1",
     "eslint-config-oclif-typescript": "^0.1",
@@ -49,6 +52,9 @@
   "oclif": {
     "commands": "./lib/commands",
     "bin": "gprj",
+    "hooks": {
+      "init": "./lib/hooks/init/db"
+    },
     "plugins": [
       "@oclif/plugin-help"
     ]
@@ -58,7 +64,7 @@
     "postpack": "rm -f oclif.manifest.json",
     "posttest": "eslint . --ext .ts --config .eslintrc",
     "prepack": "rm -rf lib && tsc -b && oclif-dev manifest && oclif-dev readme",
-    "test": "nyc --extension .ts mocha --forbid-only \"test/**/*.test.ts\"",
+    "test": "cross-env NODE_ENV=test nyc --reporter text-summary --extension .ts mocha --forbid-only \"test/**/*.test.ts\" -R list",
     "version": "oclif-dev readme && git add README.md"
   },
   "types": "lib/index.d.ts"

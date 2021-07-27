@@ -17,4 +17,11 @@ describe('hello', () => {
   .it('runs hello --name jeff', ctx => {
     expect(ctx.stdout).to.contain('hello jeff')
   })
+
+  test
+  .stdout()
+  .command(['hello'])
+  .it('runs hello with db', ctx => {
+    expect(ctx.stdout).to.contain('  ℹ  Found repositories: []')
+  })
 })
