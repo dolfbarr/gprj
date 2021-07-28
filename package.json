@@ -33,6 +33,7 @@
     "globby": "^10",
     "mocha": "^5",
     "nyc": "^14",
+    "pre-commit": "^1.2.2",
     "rimraf": "^3.0.2",
     "ts-node": "^8",
     "typescript": "^3.3"
@@ -70,5 +71,6 @@
     "test": "cross-env NODE_ENV=test nyc --reporter text-summary --extension .ts mocha --forbid-only \"test/**/*.test.ts\" -R list && rimraf test/gprj_db.json",
     "version": "oclif-dev readme && git add README.md"
   },
-  "types": "lib/index.d.ts"
+  "types": "lib/index.d.ts",
+  "pre-commit": ["test"]
 }
