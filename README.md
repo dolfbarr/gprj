@@ -7,6 +7,7 @@ Clean &amp; simple CLI git multi project manager
 [![Version](https://img.shields.io/npm/v/gprj.svg)](https://npmjs.org/package/gprj)
 [![Downloads/week](https://img.shields.io/npm/dw/gprj.svg)](https://npmjs.org/package/gprj)
 [![License](https://img.shields.io/npm/l/gprj.svg)](https://github.com/dolfbarr/gprj/blob/master/package.json)
+[![Test](https://github.com/dolfbarr/gprj/actions/workflows/push.yaml/badge.svg?branch=main&event=push)](https://github.com/dolfbarr/gprj/actions/workflows/push.yaml)
 
 <!-- toc -->
 * [Usage](#usage)
