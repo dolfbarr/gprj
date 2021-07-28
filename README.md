@@ -20,7 +20,7 @@ $ npm install -g gprj
 $ gprj COMMAND
 running command...
 $ gprj (-v|--version|version)
-gprj/0.1.2 darwin-x64 node-v14.17.3
+gprj/0.1.3 darwin-x64 node-v14.17.3
 $ gprj --help [COMMAND]
 USAGE
   $ gprj COMMAND
@@ -30,7 +30,6 @@ USAGE
 # Commands
 <!-- commands -->
 * [`gprj add [PATH]`](#gprj-add-path)
-* [`gprj hello [FILE]`](#gprj-hello-file)
 * [`gprj help [COMMAND]`](#gprj-help-command)
 * [`gprj list`](#gprj-list)
 
@@ -46,27 +45,7 @@ OPTIONS
   -h, --help  show CLI help
 ```
 
-_See code: [src/commands/add.ts](https://github.com/dolfbarr/gprj/blob/v0.1.2/src/commands/add.ts)_
-
-## `gprj hello [FILE]`
-
-Test temporary command
-
-```
-USAGE
-  $ gprj hello [FILE]
-
-OPTIONS
-  -f, --force
-  -h, --help       show CLI help
-  -n, --name=name  name to print
-
-EXAMPLE
-  $ gprj hello
-  hello world from ./src/hello.ts!
-```
-
-_See code: [src/commands/hello.ts](https://github.com/dolfbarr/gprj/blob/v0.1.2/src/commands/hello.ts)_
+_See code: [src/commands/add.ts](https://github.com/dolfbarr/gprj/blob/v0.1.3/src/commands/add.ts)_
 
 ## `gprj help [COMMAND]`
 
@@ -97,5 +76,5 @@ OPTIONS
   -h, --help  show CLI help
 ```
 
-_See code: [src/commands/list.ts](https://github.com/dolfbarr/gprj/blob/v0.1.2/src/commands/list.ts)_
+_See code: [src/commands/list.ts](https://github.com/dolfbarr/gprj/blob/v0.1.3/src/commands/list.ts)_
 <!-- commandsstop -->
