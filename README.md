@@ -20,7 +20,7 @@ $ npm install -g gprj
 $ gprj COMMAND
 running command...
 $ gprj (-v|--version|version)
-gprj/0.1.0 darwin-x64 node-v14.17.3
+gprj/0.1.1 darwin-x64 node-v14.17.3
 $ gprj --help [COMMAND]
 USAGE
   $ gprj COMMAND
@@ -35,7 +35,7 @@ USAGE
 
 ## `gprj add [PATH]`
 
-adds repository to local database
+Adds repository to local database
 
 ```
 USAGE
@@ -45,11 +45,11 @@ OPTIONS
   -h, --help  show CLI help
 ```
 
-_See code: [src/commands/add.ts](https://github.com/dolfbarr/gprj/blob/v0.1.0/src/commands/add.ts)_
+_See code: [src/commands/add.ts](https://github.com/dolfbarr/gprj/blob/v0.1.1/src/commands/add.ts)_
 
 ## `gprj hello [FILE]`
 
-describe the command here
+Test temporary command
 
 ```
 USAGE
@@ -65,7 +65,7 @@ EXAMPLE
   hello world from ./src/hello.ts!
 ```
 
-_See code: [src/commands/hello.ts](https://github.com/dolfbarr/gprj/blob/v0.1.0/src/commands/hello.ts)_
+_See code: [src/commands/hello.ts](https://github.com/dolfbarr/gprj/blob/v0.1.1/src/commands/hello.ts)_
 
 ## `gprj help [COMMAND]`
 
