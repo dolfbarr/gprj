@@ -12,6 +12,7 @@ export const createDataBase: Hook<'init'> = async function () {
   if (!fs.existsSync(join(dataDir, DB_FILE))) {
     info(`Creating db in ${dataDir}`)
 
+    /* istanbul ignore next */
     !isTest() && fs.mkdirSync(dataDir)
     await getDB(dataDir)
   }

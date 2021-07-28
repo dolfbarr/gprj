@@ -28,8 +28,23 @@ USAGE
 <!-- usagestop -->
 # Commands
 <!-- commands -->
+* [`gprj add [PATH]`](#gprj-add-path)
 * [`gprj hello [FILE]`](#gprj-hello-file)
 * [`gprj help [COMMAND]`](#gprj-help-command)
+
+## `gprj add [PATH]`
+
+adds repository to local database
+
+```
+USAGE
+  $ gprj add [PATH]
+
+OPTIONS
+  -h, --help  show CLI help
+```
+
+_See code: [src/commands/add.ts](https://github.com/dolfbarr/gprj/blob/v0.1.0/src/commands/add.ts)_
 
 ## `gprj hello [FILE]`
 

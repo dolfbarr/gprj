@@ -6,3 +6,4 @@
 /package-lock.json
 /tmp
 node_modules
+test/gprj_db.json
