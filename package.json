@@ -17,6 +17,7 @@
     "figures": "3.2.0",
     "lodash": "4.17.21",
     "lowdb": "1.0.0",
+    "simple-git": "2.41.1",
     "tslib": "^1"
   },
   "devDependencies": {

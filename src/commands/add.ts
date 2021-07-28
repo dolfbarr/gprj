@@ -5,6 +5,7 @@ import {Logger} from '../utils/renderer'
 import fs from 'fs'
 import {isTest} from '../utils/helpers'
 import {Entities, messages} from '../utils/messages'
+import simpleGit from 'simple-git'
 
 export const NO_DIR_ERROR = 'directory does not exist'
 export const PATH_DIR_ERROR = 'path should be a directory'
@@ -41,6 +42,13 @@ export default class Add extends Command {
     const db = await getDB(this.config.dataDir)
     if (db.get('repositories').find({path: repoPath}).value()) {
       throw new Error(messages.errors.alreadyExist(Entities.Repo))
+    }
+
+    if (!isTest()) {
+      const git = simpleGit(repoPath)
+      if (!(await git.checkIsRepo())) {
+        throw new Error(messages.errors.notGitRepo())
+      }
     }
 
     db.get('repositories').push({

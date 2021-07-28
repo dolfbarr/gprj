@@ -20,6 +20,7 @@ export const messages = {
     dirNotExist: () => 'Directory does not exist',
     pathNotDir: () => 'Path should be a directory',
     alreadyExist: (entity: Entities) => `${entity} already exists`,
+    notGitRepo: () => `Path is not a git ${Entities.Repo.toLowerCase()}`,
   },
   done: {
     add: (entity: Entities) => `${entity} has been successfully added`,
