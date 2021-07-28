@@ -1,9 +1,12 @@
 import {expect, test} from '@oclif/test'
-import chalk from 'chalk'
-
-chalk.level = 0
+import fs from 'fs'
+import {tempDatabasePath} from '../../src/utils/helpers'
 
 describe('hello', () => {
+  after(() => {
+    fs.unlinkSync(tempDatabasePath())
+  })
+
   test
   .stdout()
   .command(['hello'])

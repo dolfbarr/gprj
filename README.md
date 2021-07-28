@@ -32,6 +32,7 @@ USAGE
 * [`gprj add [PATH]`](#gprj-add-path)
 * [`gprj hello [FILE]`](#gprj-hello-file)
 * [`gprj help [COMMAND]`](#gprj-help-command)
+* [`gprj list`](#gprj-list-file)
 
 ## `gprj add [PATH]`
 
@@ -83,4 +84,18 @@ OPTIONS
 ```
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.2/src/commands/help.ts)_
+
+## `gprj list [FILE]`
+
+describe the command here
+
+```
+USAGE
+  $ gprj list
+
+OPTIONS
+  -h, --help       show CLI help
+```
+
+_See code: [src/commands/list.ts](https://github.com/dolfbarr/gprj/blob/v0.1.1/src/commands/list.ts)_
 <!-- commandsstop -->

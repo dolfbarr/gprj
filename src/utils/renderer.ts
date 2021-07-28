@@ -10,15 +10,16 @@ export const NOTIFICATION_ICON_PADDING = 2
 export const INDEX_PADDING = 1
 
 export const padding = (message: string, paddings?: {start?: number; end?: number}): string => {
-  const result = message.padStart(message.length + (paddings ? paddings?.start || 0 : 0), SPACE)
-  return result.padEnd(result.length + (paddings ? paddings?.end || 0 : 0), SPACE)
+  const result = message.padStart(message.length + (paddings?.start || 0), SPACE)
+  return result.padEnd(result.length + (paddings?.end || 0), SPACE)
 }
 
 export enum Icons {
   Success='success',
   Info='info',
   Fail='fail',
-  Warning='warning'
+  Warning='warning',
+  Heart='heart',
 }
 
 export interface Icon {
@@ -45,10 +46,14 @@ export const getIcon = (type: Icons, label?: string): string => {
       icon: figures.cross,
       color: chalk.red,
     },
+    [Icons.Heart]: {
+      icon: figures.heart,
+      color: chalk.yellow,
+    },
   } as {[x in Icons]: Icon}
 
   const icon = ICONS[type]
-  return icon.color(icon.icon + (label || icon?.label ? SPACE + chalk.underline(label || icon.label) : NIL))
+  return icon.color(icon.icon + (label ? SPACE + chalk.underline(label) : NIL))
 }
 
 export class Logger {
@@ -65,9 +70,12 @@ export class Logger {
     return renderedMessage
   }
 
-  notification = (message: string, icon: Icons, label?: string): string => {
-    return this.render(padding(getIcon(icon, label), {end: NOTIFICATION_ICON_PADDING}) + message)
-  }
+  heading = (message: string) => this.render(chalk.bold(message), 0)
+
+  empty = (message?: string) => this.render(message || '', 0)
+
+  notification = (message: string, icon?: Icons, label?: string): string =>
+    this.render(padding(icon ? getIcon(icon, label) : '', {end: NOTIFICATION_ICON_PADDING}) + message)
 
   done = (message: string, label?: string): string => this.notification(message, Icons.Success, label || Alerts.Done)
 
@@ -76,6 +84,8 @@ export class Logger {
   warn = (message: string, label?: string): string => this.notification(message, Icons.Warning, label || Alerts.Warn)
 
   info = (message: string, label?: string): string => this.notification(message, Icons.Info, label || Alerts.Info)
+
+  fav = (message: string, label?: string): string => this.notification(message, Icons.Heart, label)
 
   line = (message: string, index?: number, indexPadding = 1): string => {
     return this.render(padding((index + '.').padStart(indexPadding, SPACE), {end: INDEX_PADDING}) + message)

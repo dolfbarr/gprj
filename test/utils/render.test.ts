@@ -5,7 +5,7 @@ import chalk from 'chalk'
 chalk.level = 0
 
 const message = 'GPRJ is awesome!'
-const {render, notification, line, lineAll} = new Logger(() => null)
+const {render, notification, line, lineAll, heading, done, fail, info, warn, fav, empty} = new Logger(() => null)
 
 describe('renderer', () => {
   describe('paddings', () => {
@@ -25,8 +25,8 @@ describe('renderer', () => {
       expect(padding(message)).to.equal(message)
     })
 
-    test.it('adds no paddings with empty paddings', () => {
-      expect(padding(message, {})).to.equal(message)
+    test.it('adds no paddings with empty message', () => {
+      expect(padding('')).to.equal('')
     })
   })
 
@@ -42,7 +42,7 @@ describe('renderer', () => {
 
   describe('getIcon', () => {
     test.it('returns correct icon', () => {
-      expect(getIcon(Icons.Success)).to.equal('✔')
+      expect(getIcon(Icons.Heart)).to.equal('♥')
     })
 
     test.it('returns correct icon with label', () => {
@@ -57,6 +57,44 @@ describe('renderer', () => {
 
     test.it('returns correct icon with label', () => {
       expect(notification(message, Icons.Info, 'info')).to.equal(`  ℹ info  ${message}`)
+    })
+
+    test.it('returns message without icon', () => {
+      expect(notification(message)).to.equal(`    ${message}`)
+    })
+  })
+
+  describe('notifications', () => {
+    test.it('returns done', () => {
+      expect(done(message)).to.equal(`  ✔ done  ${message}`)
+    })
+
+    test.it('returns fail', () => {
+      expect(fail(message)).to.equal(`  ✖ fail  ${message}`)
+    })
+
+    test.it('returns info', () => {
+      expect(info(message)).to.equal(`  ℹ info  ${message}`)
+    })
+
+    test.it('returns warn', () => {
+      expect(warn(message)).to.equal(`  ⚠ warn  ${message}`)
+    })
+
+    test.it('returns fav', () => {
+      expect(fav(message)).to.equal(`  ♥  ${message}`)
+    })
+  })
+
+  describe('heading', () => {
+    test.it('returns heading', () => {
+      expect(heading(message)).to.equal(`${message}`)
+    })
+  })
+
+  describe('empty', () => {
+    test.it('returns empty', () => {
+      expect(empty()).to.equal('')
     })
   })
 

@@ -1,6 +1,9 @@
-import {join, resolve} from 'path'
+import {join, resolve, sep} from 'path'
 import {DB_FILE} from './database'
 
 export const isTest = () => process.env.NODE_ENV === 'test'
 
 export const tempDatabasePath = () => join(resolve(__dirname, '../../test'), DB_FILE)
+
+/* istanbul ignore next */
+export const getBaseName = (dirPath: string) => dirPath.split(sep).pop() || dirPath
