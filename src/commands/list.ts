@@ -1,6 +1,6 @@
 import {Command, flags} from '@oclif/command'
 import {getDB} from '../utils/database'
-import {getBaseName, isTest} from '../utils/helpers'
+import {getBaseName} from '../utils/helpers'
 import {EntitiesPlural, messages} from '../utils/messages'
 import {Logger} from '../utils/renderer'
 
@@ -22,8 +22,7 @@ export default class List extends Command {
       empty()
       fav(messages.info.addCommand())
 
-      /* istanbul ignore next */
-      !isTest() && this.exit(0)
+      this.exit(0)
     } else {
       empty()
       heading(messages.info.all(EntitiesPlural.Repos))

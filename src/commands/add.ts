@@ -3,9 +3,9 @@ import {resolve} from 'path'
 import {getDB, Repo} from '../utils/database'
 import {Logger} from '../utils/renderer'
 import fs from 'fs'
-import {isTest} from '../utils/helpers'
 import {Entities, messages} from '../utils/messages'
 import simpleGit from 'simple-git'
+import {checkIsRepo} from '../utils/git'
 
 export const NO_DIR_ERROR = 'directory does not exist'
 export const PATH_DIR_ERROR = 'path should be a directory'
@@ -30,25 +30,21 @@ export default class Add extends Command {
     }
 
     const repoPath = resolve(process.cwd(), args.path)
-    /* istanbul ignore next */
-    if (!isTest() && !fs.existsSync(repoPath)) {
+    if (!fs.existsSync(repoPath)) {
       throw new Error(messages.errors.dirNotExist())
     }
-    /* istanbul ignore next */
-    if (!isTest() && !fs.lstatSync(repoPath).isDirectory()) {
+
+    if (!fs.lstatSync(repoPath).isDirectory()) {
       throw new Error(messages.errors.pathNotDir())
     }
 
     const db = await getDB(this.config.dataDir)
-    if (db.get('repositories').find({path: repoPath}).value()) {
+    if (db.get('repositories').value().find(r => r.path === repoPath)) {
       throw new Error(messages.errors.alreadyExist(Entities.Repo))
     }
-
-    if (!isTest()) {
-      const git = simpleGit(repoPath)
-      if (!(await git.checkIsRepo())) {
-        throw new Error(messages.errors.notGitRepo())
-      }
+    const git = await simpleGit(repoPath)
+    if (!(await checkIsRepo(git))) {
+      throw new Error(messages.errors.notGitRepo())
     }
 
     db.get('repositories').push({
@@ -61,8 +57,6 @@ export default class Add extends Command {
     const {fail} = new Logger(this.log)
 
     fail(error.message)
-
-    /* istanbul ignore next */
-    !isTest() && this.exit(1)
+    this.exit(1)
   }
 }
