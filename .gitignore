@@ -7,3 +7,4 @@
 /tmp
 node_modules
 test/gprj_db.json
+/tsconfig.tsbuildinfo
