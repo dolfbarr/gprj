@@ -22,6 +22,6 @@ describe('hello', () => {
   .stdout()
   .command(['hello'])
   .it('runs hello with db', ctx => {
-    expect(ctx.stdout).to.contain('  ℹ  Found repositories: []')
+    expect(ctx.stdout).to.contain('  ℹ info  Found repositories: []')
   })
 })

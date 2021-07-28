@@ -1,5 +1,6 @@
 import * as figures from 'figures'
 import chalk, {Chalk} from 'chalk'
+import {Alerts} from './messages'
 
 export const TAB = 2
 export const SPACE = ' '
@@ -68,13 +69,13 @@ export class Logger {
     return this.render(padding(getIcon(icon, label), {end: NOTIFICATION_ICON_PADDING}) + message)
   }
 
-  done = (message: string, label?: string): string => this.notification(message, Icons.Success, label)
+  done = (message: string, label?: string): string => this.notification(message, Icons.Success, label || Alerts.Done)
 
-  fail = (message: string, label?: string): string => this.notification(message, Icons.Fail, label)
+  fail = (message: string, label?: string): string => this.notification(message, Icons.Fail, label || Alerts.Fail)
 
-  warn = (message: string, label?: string): string => this.notification(message, Icons.Warning, label)
+  warn = (message: string, label?: string): string => this.notification(message, Icons.Warning, label || Alerts.Warn)
 
-  info = (message: string, label?: string): string => this.notification(message, Icons.Info, label)
+  info = (message: string, label?: string): string => this.notification(message, Icons.Info, label || Alerts.Info)
 
   line = (message: string, index?: number, indexPadding = 1): string => {
     return this.render(padding((index + '.').padStart(indexPadding, SPACE), {end: INDEX_PADDING}) + message)

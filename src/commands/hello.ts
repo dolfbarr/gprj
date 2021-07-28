@@ -1,9 +1,10 @@
 import {Command, flags} from '@oclif/command'
 import {getDB} from '../utils/database'
+import {messages} from '../utils/messages'
 import {Logger} from '../utils/renderer'
 
 export default class Hello extends Command {
-  static description = 'describe the command here'
+  static description = messages.descriptions.hello()
 
   static examples = [
     `$ gprj hello
