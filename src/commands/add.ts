@@ -15,6 +15,11 @@ export const REPO_SUCCESS = 'Repository has been added'
 export default class Add extends Command {
   static description = messages.descriptions.add()
 
+  static examples = [
+    `$ gprj add /path/to/repo
+       ✔ done  Repository has been successfully added`,
+  ]
+
   static flags = {
     help: flags.help({char: 'h'}),
   }

@@ -16,6 +16,11 @@ export const repoLine = async (r: Repo) => {
 export default class List extends Command {
   static description = messages.descriptions.list()
 
+  static examples = [
+    `$ gprj add /path/to/repo
+       ✔ done  Repository has been successfully added`,
+  ]
+
   static flags = {
     help: flags.help({char: 'h'}),
   }

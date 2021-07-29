@@ -32,7 +32,6 @@ export const messages = {
   },
   descriptions: {
     add: () =>  'Adds repository to local database',
-    hello: () => 'Test temporary command',
     list: () => 'Lists all current repositories',
   },
 }
