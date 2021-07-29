@@ -2,6 +2,7 @@ import {mockDirs, trimArray} from '../../utils/helpers'
 import List from '../list'
 import chalk from 'chalk'
 import * as db from '../../utils/database'
+import mockFS from 'mock-fs'
 import {mocked} from 'ts-jest/utils'
 
 chalk.level = 0
@@ -32,6 +33,10 @@ describe('List Command', () => {
       result.push(val)
       return true
     })
+  })
+
+  afterEach(() => {
+    mockFS.restore()
   })
 
   it('shows repos', async () => {
