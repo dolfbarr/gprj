@@ -20,7 +20,7 @@ $ npm install -g gprj
 $ gprj COMMAND
 running command...
 $ gprj (-v|--version|version)
-gprj/0.1.7 darwin-x64 node-v14.17.3
+gprj/0.1.8 darwin-x64 node-v14.17.3
 $ gprj --help [COMMAND]
 USAGE
   $ gprj COMMAND
@@ -35,7 +35,7 @@ USAGE
 
 ## `gprj add [PATH]`
 
-Adds repository to local database
+adds repository to local database
 
 ```
 USAGE
@@ -49,7 +49,7 @@ EXAMPLE
           ✔ done  Repository has been successfully added
 ```
 
-_See code: [src/commands/add.ts](https://github.com/dolfbarr/gprj/blob/v0.1.7/src/commands/add.ts)_
+_See code: [src/commands/add.ts](https://github.com/dolfbarr/gprj/blob/v0.1.8/src/commands/add.ts)_
 
 ## `gprj help [COMMAND]`
 
@@ -70,7 +70,7 @@ _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.2
 
 ## `gprj list`
 
-Lists all current repositories
+lists all repositories
 
 ```
 USAGE
@@ -87,5 +87,5 @@ EXAMPLE
           ✔ done  Repository has been successfully added
 ```
 
-_See code: [src/commands/list.ts](https://github.com/dolfbarr/gprj/blob/v0.1.7/src/commands/list.ts)_
+_See code: [src/commands/list.ts](https://github.com/dolfbarr/gprj/blob/v0.1.8/src/commands/list.ts)_
 <!-- commandsstop -->
