@@ -21,6 +21,8 @@ export default class List extends Command {
        ✔ done  Repository has been successfully added`,
   ]
 
+  static aliases = ['ls']
+
   static flags = {
     help: flags.help({char: 'h'}),
   }
