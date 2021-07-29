@@ -51,8 +51,8 @@ export const getIcon = (type: Icons, label?: string): string => {
       color: chalk.yellow,
     },
   } as {[x in Icons]: Icon}
-
   const icon = ICONS[type]
+
   return icon.color(icon.icon + (label ? SPACE + chalk.underline(label) : NIL))
 }
 
