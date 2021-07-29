@@ -6,6 +6,7 @@ export const DB_FILE = 'gprj_db.json'
 
 export interface Repo {
   path: string;
+  dateAdded: number;
 }
 
 export interface Schema {

@@ -1,6 +1,6 @@
 import {Command, flags} from '@oclif/command'
 import {resolve} from 'path'
-import {getDB, Repo} from '../utils/database'
+import {getDB} from '../utils/database'
 import {Logger} from '../utils/renderer'
 import fs from 'fs'
 import {Entities, messages} from '../utils/messages'
@@ -54,7 +54,8 @@ export default class Add extends Command {
 
     db.get('repositories').push({
       path: resolve(process.cwd(), args.path),
-    } as Repo).write()
+      dateAdded: Date.now(),
+    }).write()
     done(messages.done.add(Entities.Repo))
   }
 

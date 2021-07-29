@@ -20,7 +20,7 @@ jest.mock('../../utils/database', () => ({
     get: jest.fn().mockReturnThis(),
     push: jest.fn().mockReturnThis(),
     write: jest.fn().mockReturnThis(),
-    value: () => [{path: 'repo'}, {path: 'prj'}],
+    value: () => [{path: 'repo', dateAdded: 0}, {path: 'prj',  date: 0}] as db.Repo[],
   })),
 }))
 const mockGetDB = mocked(db.getDB, true)
@@ -98,7 +98,7 @@ describe('Add Command', () => {
     it('existing repo', async () => {
       (mockGetDB as jest.MockInstance<any, any>).mockImplementation(() => ({
         get: jest.fn().mockReturnThis(),
-        value: () => [{path: PATH_TO_REPO}],
+        value: () => [{path: PATH_TO_REPO, dateAdded: 0}],
       }))
 
       try {

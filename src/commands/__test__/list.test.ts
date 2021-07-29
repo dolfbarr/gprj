@@ -14,7 +14,7 @@ jest.mock('../../utils/git', () => ({
 jest.mock('../../utils/database', () => ({
   getDB: jest.fn().mockImplementation(() => ({
     get: jest.fn().mockReturnThis(),
-    value: () => [{path: 'repo'}, {path: 'prj'}],
+    value: () => [{path: 'repo', dateAdded: 0}, {path: 'prj', dateAdded: 0}] as db.Repo[],
   })),
 }))
 const mockGetDB = mocked(db.getDB, true)
