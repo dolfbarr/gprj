@@ -1,4 +1,4 @@
-import {trimArray} from '../../utils/helpers'
+import {mockDirs, trimArray} from '../../utils/helpers'
 import List from '../list'
 import chalk from 'chalk'
 import * as db from '../../utils/database'
@@ -6,13 +6,16 @@ import {mocked} from 'ts-jest/utils'
 
 chalk.level = 0
 
+jest.mock('../../utils/git', () => ({
+  branch: jest.fn().mockResolvedValue({current: 'main'}),
+}))
+
 jest.mock('../../utils/database', () => ({
   getDB: jest.fn().mockImplementation(() => ({
     get: jest.fn().mockReturnThis(),
     value: () => [{path: 'repo'}, {path: 'prj'}],
   })),
 }))
-
 const mockGetDB = mocked(db.getDB, true)
 
 describe('List Command', () => {
@@ -20,6 +23,8 @@ describe('List Command', () => {
 
   beforeEach(() => {
     result = []
+
+    mockDirs({repo: {}, prj: {}})
 
     jest
     .spyOn(process.stdout, 'write')
@@ -31,7 +36,7 @@ describe('List Command', () => {
 
   it('shows repos', async () => {
     await List.run([])
-    expect(trimArray(result)).toEqual(['All repositories:', '  1. repo', '  2. prj'])
+    expect(trimArray(result)).toEqual(['All repositories:', '  1. repo (main)', '  2. prj (main)'])
   })
 
   it('shows placeholders with no repos', async () => {

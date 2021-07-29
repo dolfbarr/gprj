@@ -2,3 +2,4 @@
 import {SimpleGit} from 'simple-git'
 
 export const checkIsRepo = async (git: SimpleGit) => git.checkIsRepo()
+export const branch = async (git: SimpleGit) => git.branch()

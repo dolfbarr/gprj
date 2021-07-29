@@ -2,23 +2,13 @@ import Add from '../add'
 import chalk from 'chalk'
 import * as db from '../../utils/database'
 import {mocked} from 'ts-jest/utils'
-import {trimArray} from '../../utils/helpers'
+import {mockDirs, trimArray} from '../../utils/helpers'
 import mockFS from 'mock-fs'
-import path from 'path'
 import * as git from '../../utils/git'
 
 chalk.level = 0
 
 const PATH_TO_REPO = '/path/to/repo'
-const mockDirs = (dirs = {}) => {
-  mockFS({
-    'package.json': mockFS.load(path.resolve(__dirname, '../../../package.json')),
-    'tsconfig.json': mockFS.load(path.resolve(__dirname, '../../../tsconfig.json')),
-    src: mockFS.load(path.resolve(__dirname, '../../../src')),
-    node_modules: mockFS.load(path.resolve(__dirname, '../../../node_modules')),
-    ...dirs,
-  }, {createCwd: false})
-}
 
 jest.mock('../../utils/git', () => ({
   checkIsRepo: jest.fn().mockResolvedValue(true),

@@ -1,8 +1,17 @@
 import {Command, flags} from '@oclif/command'
-import {getDB} from '../utils/database'
+import {getDB, Repo} from '../utils/database'
 import {getBaseName} from '../utils/helpers'
 import {EntitiesPlural, messages} from '../utils/messages'
 import {Logger} from '../utils/renderer'
+import simpleGit from 'simple-git'
+import {branch} from '../utils/git'
+import chalk from 'chalk'
+
+export const repoLine = async (r: Repo) => {
+  const git = await simpleGit(r.path)
+  const currentBranch = (await branch(git)).current
+  return getBaseName(r.path) + ` ${chalk.cyan(`(${currentBranch})`)}`
+}
 
 export default class List extends Command {
   static description = messages.descriptions.list()
@@ -27,7 +36,7 @@ export default class List extends Command {
       empty()
       heading(messages.info.all(EntitiesPlural.Repos))
       empty()
-      lineAll(repos.map(r => getBaseName(r.path)))
+      Promise.all(repos.map(r => repoLine(r))).then(lines => lineAll(lines))
     }
   }
 }
