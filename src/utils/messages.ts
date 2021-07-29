@@ -31,7 +31,7 @@ export const messages = {
     all: (entity: EntitiesPlural) => `All ${entity}:`,
   },
   descriptions: {
-    add: () =>  'Adds repository to local database',
-    list: () => 'Lists all current repositories',
+    add: () =>  'adds repository to local database',
+    list: () => 'lists all repositories',
   },
 }
