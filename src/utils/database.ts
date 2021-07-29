@@ -13,7 +13,6 @@ export interface Schema {
   repositories: Repo[];
 }
 
-/* istanbul ignore next */
 export const getDB = async function (dataDir: string): Promise<LowdbSync<Schema>>  {
   const dbPath = join(dataDir, DB_FILE)
 
