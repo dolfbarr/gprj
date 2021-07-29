@@ -33,7 +33,7 @@
     "jest": "27.0.6",
     "mock-fs": "^5.0.0",
     "pre-commit": "1.2.2",
-    "rimraf": "3.0.2",
+    "rimraf": "^3.0.2",
     "ts-jest": "^27.0.4",
     "ts-node": "^8",
     "typescript": "^3.3"
@@ -65,9 +65,9 @@
   },
   "repository": "dolfbarr/gprj",
   "scripts": {
-    "postpack": "rm -f oclif.manifest.json",
+    "postpack": "rimraf oclif.manifest.json",
     "posttest": "eslint . --ext .ts --config .eslintrc",
-    "prepack": "rm -rf lib && tsc -b && oclif-dev manifest && oclif-dev readme",
+    "prepack": "rimraf lib && tsc -b && oclif-dev manifest && oclif-dev readme",
     "test": "jest",
     "test:coverage": "jest --coverage",
     "version": "oclif-dev readme && git add README.md"
