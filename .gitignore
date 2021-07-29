@@ -10,3 +10,4 @@ test/gprj_db.json
 /tsconfig.tsbuildinfo
 /.vscode
 /.idea
+/coverage
