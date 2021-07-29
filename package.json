@@ -1,7 +1,7 @@
 {
   "name": "gprj",
   "description": "Clean & simple CLI git multi project manager",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "author": "Dolf Barr @dolfbarr",
   "bin": {
     "gprj": "./bin/run"
