@@ -15,23 +15,23 @@ export enum Alerts {
 }
 
 export const messages = {
-  errors: {
-    pathNotProvided: () => 'Path is not provided',
-    dirNotExist: () => 'Directory does not exist',
-    pathNotDir: () => 'Path should be a directory',
-    alreadyExist: (entity: Entities) => `${entity} already exists`,
-    notGitRepo: () => `Path is not a git ${Entities.Repo.toLowerCase()}`,
+  descriptions: {
+    add: () =>  'adds repository to local database',
+    list: () => 'lists all repositories',
   },
   done: {
     add: (entity: Entities) => `${entity} has been successfully added`,
   },
+  errors: {
+    alreadyExist: (entity: Entities) => `${entity} already exists`,
+    dirNotExist: () => 'Directory does not exist',
+    notGitRepo: () => `Path is not a git ${Entities.Repo.toLowerCase()}`,
+    pathNotDir: () => 'Path should be a directory',
+    pathNotProvided: () => 'Path is not provided',
+  },
   info: {
-    empty: (entity: EntitiesPlural) => `No ${entity} has been found`,
     addCommand: () => `You can use 'add' command to add a ${Entities.Repo.toLowerCase()}`,
     all: (entity: EntitiesPlural) => `All ${entity}:`,
-  },
-  descriptions: {
-    add: () =>  'adds repository to local database',
-    list: () => 'lists all repositories',
+    empty: (entity: EntitiesPlural) => `No ${entity} has been found`,
   },
 }

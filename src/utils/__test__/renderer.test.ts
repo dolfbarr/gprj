@@ -1,6 +1,7 @@
 
-import {getIcon, Icons, padding, Logger} from '../renderer'
 import chalk from 'chalk'
+
+import {getIcon, Icons, Logger, padding} from '../renderer'
 
 chalk.level = 0
 
@@ -10,7 +11,7 @@ const {render, notification, line, lineAll, heading, done, fail, info, warn, fav
 describe('renderer', () => {
   describe('paddings', () => {
     it('adds paddings', () => {
-      expect(padding(message, {start: 2, end: 2})).toEqual(`  ${message}  `)
+      expect(padding(message, {end: 2, start: 2})).toEqual(`  ${message}  `)
     })
 
     it('adds start paddings', () => {

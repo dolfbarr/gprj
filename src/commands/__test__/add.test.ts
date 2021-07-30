@@ -1,10 +1,11 @@
-import Add from '../add'
 import chalk from 'chalk'
-import * as db from '../../utils/database'
-import {mocked} from 'ts-jest/utils'
-import {mockDirs, trimArray} from '../../utils/helpers'
 import mockFS from 'mock-fs'
+import {mocked} from 'ts-jest/utils'
+
+import * as db from '../../utils/database'
 import * as git from '../../utils/git'
+import {mockDirs, trimArray} from '../../utils/helpers'
+import Add from '../add'
 
 chalk.level = 0
 
@@ -19,8 +20,8 @@ jest.mock('../../utils/database', () => ({
   getDB: jest.fn().mockImplementation(() => ({
     get: jest.fn().mockReturnThis(),
     push: jest.fn().mockReturnThis(),
+    value: () => [{dateAdded: 0, path: 'repo'}, {date: 0,  path: 'prj'}] as db.Repo[],
     write: jest.fn().mockReturnThis(),
-    value: () => [{path: 'repo', dateAdded: 0}, {path: 'prj',  date: 0}] as db.Repo[],
   })),
 }))
 const mockGetDB = mocked(db.getDB, true)
@@ -98,7 +99,7 @@ describe('Add Command', () => {
     it('existing repo', async () => {
       (mockGetDB as jest.MockInstance<any, any>).mockImplementation(() => ({
         get: jest.fn().mockReturnThis(),
-        value: () => [{path: PATH_TO_REPO, dateAdded: 0}],
+        value: () => [{dateAdded: 0, path: PATH_TO_REPO}],
       }))
 
       try {

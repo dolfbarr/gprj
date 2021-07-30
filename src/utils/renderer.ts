@@ -1,5 +1,6 @@
-import * as figures from 'figures'
 import chalk, {Chalk} from 'chalk'
+import * as figures from 'figures'
+
 import {Alerts} from './messages'
 
 export const TAB = 2
@@ -31,24 +32,24 @@ export interface Icon {
 export const getIcon = (type: Icons, label?: string): string => {
   const ICONS = {
     [Icons.Success]: {
-      icon: figures.tick,
       color: chalk.green,
+      icon: figures.tick,
     },
     [Icons.Info]: {
-      icon: figures.info,
       color: chalk.blue,
+      icon: figures.info,
     },
     [Icons.Warning]: {
-      icon: figures.warning,
       color: chalk.yellow,
+      icon: figures.warning,
     },
     [Icons.Fail]: {
-      icon: figures.cross,
       color: chalk.red,
+      icon: figures.cross,
     },
     [Icons.Heart]: {
-      icon: figures.heart,
       color: chalk.yellow,
+      icon: figures.heart,
     },
   } as {[x in Icons]: Icon}
   const icon = ICONS[type]

@@ -1,11 +1,12 @@
 import {Command, flags} from '@oclif/command'
-import {resolve} from 'path'
-import {getDB} from '../utils/database'
-import {Logger} from '../utils/renderer'
 import fs from 'fs'
-import {Entities, messages} from '../utils/messages'
+import {resolve} from 'path'
 import simpleGit from 'simple-git'
+
+import {getDB} from '../utils/database'
 import {checkIsRepo} from '../utils/git'
+import {Entities, messages} from '../utils/messages'
+import {Logger} from '../utils/renderer'
 
 export const NO_DIR_ERROR = 'directory does not exist'
 export const PATH_DIR_ERROR = 'path should be a directory'
@@ -53,8 +54,8 @@ export default class Add extends Command {
     }
 
     db.get('repositories').push({
-      path: resolve(process.cwd(), args.path),
       dateAdded: Date.now(),
+      path: resolve(process.cwd(), args.path),
     }).write()
     done(messages.done.add(Entities.Repo))
   }

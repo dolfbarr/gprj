@@ -1,11 +1,12 @@
 import {Command, flags} from '@oclif/command'
+import chalk from 'chalk'
+import simpleGit from 'simple-git'
+
 import {getDB, Repo} from '../utils/database'
+import {branch} from '../utils/git'
 import {getBaseName} from '../utils/helpers'
 import {EntitiesPlural, messages} from '../utils/messages'
 import {Logger} from '../utils/renderer'
-import simpleGit from 'simple-git'
-import {branch} from '../utils/git'
-import chalk from 'chalk'
 
 export const repoLine = async (r: Repo) => {
   const git = await simpleGit(r.path)

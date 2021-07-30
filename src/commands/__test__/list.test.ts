@@ -1,9 +1,10 @@
-import {mockDirs, trimArray} from '../../utils/helpers'
-import List from '../list'
 import chalk from 'chalk'
-import * as db from '../../utils/database'
 import mockFS from 'mock-fs'
 import {mocked} from 'ts-jest/utils'
+
+import * as db from '../../utils/database'
+import {mockDirs, trimArray} from '../../utils/helpers'
+import List from '../list'
 
 chalk.level = 0
 
@@ -14,7 +15,7 @@ jest.mock('../../utils/git', () => ({
 jest.mock('../../utils/database', () => ({
   getDB: jest.fn().mockImplementation(() => ({
     get: jest.fn().mockReturnThis(),
-    value: () => [{path: 'repo', dateAdded: 0}, {path: 'prj', dateAdded: 0}] as db.Repo[],
+    value: () => [{dateAdded: 0, path: 'repo'}, {dateAdded: 0, path: 'prj'}] as db.Repo[],
   })),
 }))
 const mockGetDB = mocked(db.getDB, true)
@@ -25,7 +26,7 @@ describe('List Command', () => {
   beforeEach(() => {
     result = []
 
-    mockDirs({repo: {}, prj: {}})
+    mockDirs({prj: {}, repo: {}})
 
     jest
     .spyOn(process.stdout, 'write')
