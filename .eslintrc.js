@@ -7,6 +7,6 @@ module.exports = {
   rules: {
     'simple-import-sort/imports': ['error'],
     'sort-keys-fix/sort-keys-fix': ['error', 'asc', {caseSensitive: false, natural: true}],
-    'sort-vars': ['error', { ignoreCase: true }]
+    'sort-vars': ['error', {ignoreCase: true}]
   }
 }

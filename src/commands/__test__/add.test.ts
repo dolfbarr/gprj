@@ -2,9 +2,10 @@ import chalk from 'chalk'
 import mockFS from 'mock-fs'
 import {mocked} from 'ts-jest/utils'
 
+import {mockDirs} from '../../test.helpers'
 import * as db from '../../utils/database'
 import * as git from '../../utils/git'
-import {mockDirs, trimArray} from '../../utils/helpers'
+import {trimArray} from '../../utils/helpers'
 import Add from '../add'
 
 chalk.level = 0
