@@ -21,6 +21,11 @@ export enum Icons {
   Fail='fail',
   Warning='warning',
   Heart='heart',
+
+  // Git related
+  Ahead='ahead',
+  Behind='behind',
+  Diverged='diverged'
 }
 
 export interface Icon {
@@ -51,10 +56,43 @@ export const getIcon = (type: Icons, label?: string): string => {
       color: chalk.yellow,
       icon: figures.heart,
     },
+
+    // Git related
+    [Icons.Ahead]: {
+      color: chalk.green,
+      icon: figures.arrowUp,
+    },
+    [Icons.Behind]: {
+      color: chalk.red,
+      icon: figures.arrowDown,
+    },
+    [Icons.Diverged]: {
+      color: chalk.yellow,
+      icon: figures.warning, // as soon as we going to use binary file to start the app, we should change it as soon as we will be able to use figures 4.0+
+    },
   } as {[x in Icons]: Icon}
   const icon = ICONS[type]
 
   return icon.color(icon.icon + (label ? SPACE + chalk.underline(label) : NIL))
+}
+
+export interface Statuses {
+  status: {ahead: number; behind: number};
+}
+
+export const getStatuses = ({status: {ahead, behind}}: Statuses): string => {
+  const currentStatuses = []
+  const getAheadBehind = (ahead: number, behind: number): string => {
+    if (ahead && behind) return getIcon(Icons.Diverged)
+    if (ahead && !behind) return getIcon(Icons.Ahead)
+    if (!ahead && behind) return getIcon(Icons.Behind)
+
+    return SPACE
+  }
+
+  currentStatuses.push(getAheadBehind(ahead, behind))
+
+  return currentStatuses.join('')
 }
 
 export class Logger {

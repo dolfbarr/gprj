@@ -10,7 +10,7 @@ import List from '../list'
 chalk.level = 0
 
 jest.mock('../../utils/git', () => ({
-  branch: jest.fn().mockResolvedValue({current: 'main'}),
+  status: jest.fn().mockResolvedValue({ahead: 10, behind: 0, current: 'main'}),
 }))
 
 jest.mock('../../utils/database', () => ({
@@ -43,7 +43,7 @@ describe('List Command', () => {
 
   it('shows repos', async () => {
     await List.run([])
-    expect(trimArray(result)).toEqual(['All repositories:', '  1. repo (main)', '  2. prj (main)'])
+    expect(trimArray(result)).toEqual(['All repositories:', '  1. ↑ repo (main)', '  2. ↑ prj (main)'])
   })
 
   it('shows placeholders with no repos', async () => {

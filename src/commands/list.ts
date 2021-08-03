@@ -3,15 +3,15 @@ import chalk from 'chalk'
 import simpleGit from 'simple-git'
 
 import {getDB, Repo} from '../utils/database'
-import {branch} from '../utils/git'
+import {status} from '../utils/git'
 import {getBaseName} from '../utils/helpers'
 import {EntitiesPlural, messages} from '../utils/messages'
-import {Logger} from '../utils/renderer'
+import {getStatuses, Logger, SPACE} from '../utils/renderer'
 
 export const repoLine = async (r: Repo) => {
   const git = await simpleGit(r.path)
-  const currentBranch = (await branch(git)).current
-  return getBaseName(r.path) + ` ${chalk.cyan(`(${currentBranch})`)}`
+  const currentStatus = (await status(git))
+  return getStatuses({status: {ahead: currentStatus.ahead, behind: currentStatus.behind}}) + SPACE + getBaseName(r.path) + ` ${chalk.cyan(`(${currentStatus.current})`)}`
 }
 
 export default class List extends Command {

@@ -1,7 +1,7 @@
 
 import chalk from 'chalk'
 
-import {getIcon, Icons, Logger, padding} from '../renderer'
+import {getIcon, getStatuses, Icons, Logger, padding} from '../renderer'
 
 chalk.level = 0
 
@@ -48,6 +48,24 @@ describe('renderer', () => {
 
     it('returns correct icon with label', () => {
       expect(getIcon(Icons.Fail, 'Fail')).toEqual('✖ Fail')
+    })
+  })
+
+  describe('getStatuses', () => {
+    it('returns ahead', () => {
+      expect(getStatuses({status: {ahead: 10, behind: 0}})).toEqual('↑')
+    })
+
+    it('returns behind', () => {
+      expect(getStatuses({status: {ahead: 0, behind: 10}})).toEqual('↓')
+    })
+
+    it('returns diverged', () => {
+      expect(getStatuses({status: {ahead: 10, behind: 10}})).toEqual('⚠')
+    })
+
+    it('returns SPACE', () => {
+      expect(getStatuses({status: {ahead: 0, behind: 0}})).toEqual(' ')
     })
   })
 
