@@ -6,7 +6,7 @@ import {getDB, Repo} from '../utils/database'
 import {status} from '../utils/git'
 import {getBaseName, getRepoStatus, RepoStatus} from '../utils/helpers'
 import {EntitiesPlural, messages} from '../utils/messages'
-import {getStatuses, Icons, list, Logger, SPACE} from '../utils/renderer'
+import {getModified, getStatuses, Icons, list, Logger} from '../utils/renderer'
 
 export interface TotalStatus {
   ahead: number;
@@ -33,7 +33,11 @@ export const repoLine = async (r: Repo, totalStatus: TotalStatus) => {
     break
   }
 
-  return getStatuses({status: gitStatus}) + SPACE + getBaseName(r.path) + ` ${chalk.cyan(`(${currentStatus.current})`)}`
+  const modified = getModified(currentStatus.files.map(file => ({
+    path: file.path,
+  })))
+
+  return `${getStatuses(gitStatus)} ${getBaseName(r.path)}${modified} ${chalk.cyan(`(${currentStatus.current})`)}`
 }
 
 export const getReposLines = async (repos: Repo[]): Promise<[string[], TotalStatus]> => {

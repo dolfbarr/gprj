@@ -1,7 +1,7 @@
 
 import chalk from 'chalk'
 
-import {getIcon, getStatuses, Icons, list, listItem, Logger, padding} from '../renderer'
+import {getIcon, getModified, getStatuses, Icons, list, listItem, Logger, padding} from '../renderer'
 
 chalk.level = 0
 
@@ -53,19 +53,29 @@ describe('renderer', () => {
 
   describe('getStatuses', () => {
     it('returns ahead', () => {
-      expect(getStatuses({status: {ahead: 10, behind: 0}})).toEqual('↑')
+      expect(getStatuses({ahead: 10, behind: 0})).toEqual('↑')
     })
 
     it('returns behind', () => {
-      expect(getStatuses({status: {ahead: 0, behind: 10}})).toEqual('↓')
+      expect(getStatuses({ahead: 0, behind: 10})).toEqual('↓')
     })
 
     it('returns diverged', () => {
-      expect(getStatuses({status: {ahead: 10, behind: 10}})).toEqual('⚠')
+      expect(getStatuses({ahead: 10, behind: 10})).toEqual('⚠')
     })
 
     it('returns SPACE', () => {
-      expect(getStatuses({status: {ahead: 0, behind: 0}})).toEqual(' ')
+      expect(getStatuses({ahead: 0, behind: 0})).toEqual(' ')
+    })
+  })
+
+  describe('getModified', () => {
+    it('returns modified', () => {
+      expect(getModified([{path: '/path/to/file'}])).toEqual('*')
+    })
+
+    it('returns NIL if not modified', () => {
+      expect(getModified([])).toEqual('')
     })
   })
 

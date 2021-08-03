@@ -9,6 +9,7 @@ export const SPACE = ' '
 export const NIL = ''
 
 export const SEPARATOR = '·'
+export const MODIFiED_ICON = '*'
 
 export const NOTIFICATION_ICON_PADDING = 2
 export const INDEX_PADDING = 1
@@ -79,7 +80,7 @@ export const getIcon = (type: Icons, label?: string): string => {
   return icon.color(icon.icon + (label ? SPACE + chalk.underline(label) : NIL))
 }
 
-export const getStatuses = ({status}: Statuses): string => {
+export const getStatuses = (status: Statuses['status']): string => {
   const currentStatuses = []
   const getAheadBehind = (status: Statuses['status']): string => {
     switch (getRepoStatus(status)) {
@@ -97,6 +98,13 @@ export const getStatuses = ({status}: Statuses): string => {
   currentStatuses.push(getAheadBehind(status))
 
   return currentStatuses.join(NIL)
+}
+
+export const getModified = (modified: Statuses['files']) => {
+  if (modified.length > 0) {
+    return chalk.green(MODIFiED_ICON)
+  }
+  return NIL
 }
 
 export interface ListItem {
