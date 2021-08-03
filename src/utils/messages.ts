@@ -19,6 +19,7 @@ export const messages = {
   descriptions: {
     add: () =>  'adds repository to local database',
     list: () => 'lists all repositories',
+    remove: () => 'removes repository from local database',
   },
   done: {
     add: (entity: Entities) => `${entity} has been successfully added`,

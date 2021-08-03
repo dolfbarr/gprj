@@ -6,7 +6,7 @@ import {Entities, EntitiesPlural, messages} from '../utils/messages'
 import {Logger} from '../utils/renderer'
 
 export default class Remove extends Command {
-  static description = 'describe the command here'
+  static description = messages.descriptions.remove()
 
   static examples = [
     `$ gprj remove /path/to/repo ${INDEX_MARK}2 repo
