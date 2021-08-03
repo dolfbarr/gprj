@@ -32,6 +32,7 @@ USAGE
 * [`gprj add [PATH]`](#gprj-add-path)
 * [`gprj help [COMMAND]`](#gprj-help-command)
 * [`gprj list`](#gprj-list)
+* [`gprj remove [FILE]`](#gprj-remove-file)
 
 ## `gprj add [PATH]`
 
@@ -91,4 +92,20 @@ EXAMPLE
 ```
 
 _See code: [src/commands/list.ts](https://github.com/dolfbarr/gprj/blob/v0.3.0/src/commands/list.ts)_
+
+## `gprj remove [FILE]`
+
+describe the command here
+
+```
+USAGE
+  $ gprj remove [FILE]
+
+OPTIONS
+  -f, --force
+  -h, --help       show CLI help
+  -n, --name=name  name to print
+```
+
+_See code: [src/commands/remove.ts](https://github.com/dolfbarr/gprj/blob/v0.3.0/src/commands/remove.ts)_
 <!-- commandsstop -->

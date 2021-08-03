@@ -32,7 +32,7 @@ export default class Add extends Command {
     const {done} = new Logger(this.log)
 
     if (!args.path) {
-      throw new Error(messages.errors.pathNotProvided())
+      throw new Error(messages.errors.notProvided(Entities.Path))
     }
 
     const repoPath = resolve(process.cwd(), args.path)

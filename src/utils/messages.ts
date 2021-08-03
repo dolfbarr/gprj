@@ -1,6 +1,7 @@
 /* istanbul ignore file */
 export enum Entities {
-  Repo='Repository'
+  Repo='Repository',
+  Path='Path',
 }
 
 export enum EntitiesPlural {
@@ -21,13 +22,15 @@ export const messages = {
   },
   done: {
     add: (entity: Entities) => `${entity} has been successfully added`,
+    remove: (entity: EntitiesPlural) => `All ${entity} have been successfully removed`,
   },
   errors: {
     alreadyExist: (entity: Entities) => `${entity} already exists`,
     dirNotExist: () => 'Directory does not exist',
+    notExist: (entity: Entities) => `${entity} does not exist`,
     notGitRepo: () => `Path is not a git ${Entities.Repo.toLowerCase()}`,
+    notProvided: (entity: Entities) => `${entity} is not provided`,
     pathNotDir: () => 'Path should be a directory',
-    pathNotProvided: () => 'Path is not provided',
   },
   info: {
     addCommand: () => `You can use 'add' command to add a ${Entities.Repo.toLowerCase()}`,
