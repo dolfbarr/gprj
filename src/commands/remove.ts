@@ -33,7 +33,7 @@ export default class Remove extends Command {
     const currentRepos = db.get('repositories')
 
     findRepositories(argv, currentRepos.value()).forEach((repo: Repo) => currentRepos.remove({path: repo.path}).write())
-    done(messages.done.remove(EntitiesPlural.Repos))
+    done(argv.length > 1 ? messages.done.removePlural(EntitiesPlural.Repos) :  messages.done.remove(Entities.Repo))
   }
 
   async catch(error: any) {

@@ -24,7 +24,9 @@ export const messages = {
   },
   done: {
     add: (entity: Entities) => `${entity} has been successfully added`,
-    remove: (entity: EntitiesPlural) => `All ${entity} have been successfully removed`,
+    addPlural: (entity: EntitiesPlural) => `All ${entity} have been successfully added`,
+    remove: (entity: Entities) => `${entity} has been successfully removed`,
+    removePlural: (entity: EntitiesPlural) => `All ${entity} have been successfully removed`,
   },
   errors: {
     alreadyExist: (entity: Entities) => `${entity} already exists`,

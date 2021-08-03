@@ -5,7 +5,7 @@ import simpleGit from 'simple-git'
 
 import {getDB} from '../utils/database'
 import {checkIsRepo} from '../utils/git'
-import {Entities, messages} from '../utils/messages'
+import {Entities, EntitiesPlural, messages} from '../utils/messages'
 import {Logger} from '../utils/renderer'
 
 export const NO_DIR_ERROR = 'directory does not exist'
@@ -25,39 +25,43 @@ export default class Add extends Command {
     help: flags.help({char: 'h'}),
   }
 
-  static args = [{name: 'path'}]
+  static strict = false
 
   async run() {
-    const {args} = this.parse(Add)
+    const {argv} = this.parse(Add)
     const {done} = new Logger(this.log)
 
-    if (!args.path) {
+    if (argv.length === 0) {
       throw new Error(messages.errors.notProvided(Entities.Path))
     }
 
-    const repoPath = resolve(process.cwd(), args.path)
-    if (!fs.existsSync(repoPath)) {
-      throw new Error(messages.errors.dirNotExist())
-    }
+    await Promise.all(argv.map(async (argPath: string) => {
+      const repoPath = resolve(process.cwd(), argPath)
+      if (!fs.existsSync(repoPath)) {
+        throw new Error(messages.errors.dirNotExist())
+      }
 
-    if (!fs.lstatSync(repoPath).isDirectory()) {
-      throw new Error(messages.errors.pathNotDir())
-    }
+      if (!fs.lstatSync(repoPath).isDirectory()) {
+        throw new Error(messages.errors.pathNotDir())
+      }
 
-    const db = await getDB(this.config.dataDir)
-    if (db.get('repositories').value().find(r => r.path === repoPath)) {
-      throw new Error(messages.errors.alreadyExist(Entities.Repo))
-    }
-    const git = await simpleGit(repoPath)
-    if (!(await checkIsRepo(git))) {
-      throw new Error(messages.errors.notGitRepo())
-    }
+      const db = await getDB(this.config.dataDir)
+      if (db.get('repositories').value().find(r => r.path === repoPath)) {
+        throw new Error(messages.errors.alreadyExist(Entities.Repo))
+      }
 
-    db.get('repositories').push({
-      dateAdded: Date.now(),
-      path: resolve(process.cwd(), args.path),
-    }).write()
-    done(messages.done.add(Entities.Repo))
+      const git = await simpleGit(repoPath)
+      if (!(await checkIsRepo(git))) {
+        throw new Error(messages.errors.notGitRepo())
+      }
+
+      db.get('repositories').push({
+        dateAdded: Date.now(),
+        path: repoPath,
+      }).write()
+    }))
+
+    done(argv.length > 1 ? messages.done.addPlural(EntitiesPlural.Repos) :  messages.done.add(Entities.Repo))
   }
 
   async catch(error: any) {

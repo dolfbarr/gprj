@@ -12,7 +12,7 @@ jest.mock('../../utils/database', () => ({
   getDB: jest.fn().mockImplementation(() => ({
     get: jest.fn().mockReturnThis(),
     remove: jest.fn().mockReturnThis(),
-    value: () => [{dateAdded: 0, path: 'repo'}, {date: 0,  path: 'prj'}] as db.Repo[],
+    value: () => [{dateAdded: 0, path: 'repo'}, {date: 0,  path: 'prj'}, {date: 0,  path: 'repo2'}] as db.Repo[],
     write: jest.fn().mockReturnThis(),
   })),
 }))
@@ -23,7 +23,7 @@ describe('Remove Command', () => {
   beforeEach(() => {
     result = []
 
-    mockDirs({prj: {}, repo: {}, unknown: {}})
+    mockDirs({prj: {}, repo: {}, repo2: {}, unknown: {}})
 
     jest
     .spyOn(process.stdout, 'write')
@@ -39,6 +39,11 @@ describe('Remove Command', () => {
 
   it('removes repo', async () => {
     await Remove.run(['repo'])
+    expect(trimArray(result)).toEqual(['  ✔ done  Repository has been successfully removed'])
+  })
+
+  it('removes repos', async () => {
+    await Remove.run(['repo', 'repo2'])
     expect(trimArray(result)).toEqual(['  ✔ done  All repositories have been successfully removed'])
   })
 

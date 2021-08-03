@@ -33,7 +33,7 @@ describe('Add Command', () => {
   beforeEach(() => {
     result = []
 
-    mockDirs({[PATH_TO_REPO]: {}, prj: {}, repo: {}})
+    mockDirs({[PATH_TO_REPO]: {}, [PATH_TO_REPO + '1']: {}, prj: {}, repo: {}})
 
     jest
     .spyOn(process.stdout, 'write')
@@ -50,6 +50,11 @@ describe('Add Command', () => {
   it('adds repo', async () => {
     await Add.run([PATH_TO_REPO])
     expect(trimArray(result)).toEqual(['  ✔ done  Repository has been successfully added'])
+  })
+
+  it('adds multiple repos', async () => {
+    await Add.run([PATH_TO_REPO, PATH_TO_REPO + '1'])
+    expect(trimArray(result)).toEqual(['  ✔ done  All repositories have been successfully added'])
   })
 
   describe('fails with', () => {
