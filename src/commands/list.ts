@@ -18,8 +18,11 @@ export default class List extends Command {
   static description = messages.descriptions.list()
 
   static examples = [
-    `$ gprj add /path/to/repo
-       ✔ done  Repository has been successfully added`,
+    `$ gprj list
+
+       All repositories:
+
+         1. gprj (main)`,
   ]
 
   static aliases = ['ls']
