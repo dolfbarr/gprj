@@ -38,7 +38,7 @@ export const repoLine = async (r: Repo, totalStatus: TotalStatus) => {
     path: file.path,
   })))
 
-  return `${getStatuses({stash: currentStashList.total, status: gitStatus})} ${getBaseName(r.path)}${modified} ${chalk.cyan(`(${currentStatus.current})`)}`
+  return `${getStatuses({stash: currentStashList.total, status: gitStatus})} ${getBaseName(r.path)}${modified} ${chalk.magenta(`(${currentStatus.current})`)}`
 }
 
 export const getReposLines = async (repos: Repo[]): Promise<[string[], TotalStatus]> => {
