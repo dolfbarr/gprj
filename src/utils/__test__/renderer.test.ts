@@ -52,20 +52,27 @@ describe('renderer', () => {
   })
 
   describe('getStatuses', () => {
-    it('returns ahead', () => {
-      expect(getStatuses({ahead: 10, behind: 0})).toEqual('↑')
-    })
+    describe('ahead and behind', () => {
+      it('returns ahead', () => {
+        expect(getStatuses({stash: 0, status: {ahead: 10, behind: 0}})).toEqual(' ↑')
+      })
 
-    it('returns behind', () => {
-      expect(getStatuses({ahead: 0, behind: 10})).toEqual('↓')
-    })
+      it('returns behind', () => {
+        expect(getStatuses({stash: 0, status: {ahead: 0, behind: 10}})).toEqual(' ↓')
+      })
 
-    it('returns diverged', () => {
-      expect(getStatuses({ahead: 10, behind: 10})).toEqual('⚠')
-    })
+      it('returns diverged', () => {
+        expect(getStatuses({stash: 0, status: {ahead: 10, behind: 10}})).toEqual(' ⚠')
+      })
 
-    it('returns SPACE', () => {
-      expect(getStatuses({ahead: 0, behind: 0})).toEqual(' ')
+      it('returns SPACE', () => {
+        expect(getStatuses({stash: 0, status: {ahead: 0, behind: 0}})).toEqual('  ')
+      })
+    })
+    describe('stash', () => {
+      it('returns stash', () => {
+        expect(getStatuses({stash: 10, status: {ahead: 0, behind: 0}})).toEqual('$ ')
+      })
     })
   })
 

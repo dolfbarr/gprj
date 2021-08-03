@@ -3,7 +3,7 @@ import chalk from 'chalk'
 import simpleGit from 'simple-git'
 
 import {getDB, Repo} from '../utils/database'
-import {status} from '../utils/git'
+import {stashList, status} from '../utils/git'
 import {getBaseName, getRepoStatus, RepoStatus} from '../utils/helpers'
 import {EntitiesPlural, messages} from '../utils/messages'
 import {getModified, getStatuses, Icons, list, Logger} from '../utils/renderer'
@@ -17,6 +17,7 @@ export interface TotalStatus {
 export const repoLine = async (r: Repo, totalStatus: TotalStatus) => {
   const git = await simpleGit(r.path)
   const currentStatus = (await status(git))
+  const currentStashList = (await stashList(git))
   const gitStatus = {ahead: currentStatus.ahead, behind: currentStatus.behind}
 
   switch (getRepoStatus(gitStatus)) {
@@ -37,7 +38,7 @@ export const repoLine = async (r: Repo, totalStatus: TotalStatus) => {
     path: file.path,
   })))
 
-  return `${getStatuses(gitStatus)} ${getBaseName(r.path)}${modified} ${chalk.cyan(`(${currentStatus.current})`)}`
+  return `${getStatuses({stash: currentStashList.total, status: gitStatus})} ${getBaseName(r.path)}${modified} ${chalk.cyan(`(${currentStatus.current})`)}`
 }
 
 export const getReposLines = async (repos: Repo[]): Promise<[string[], TotalStatus]> => {

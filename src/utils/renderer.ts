@@ -29,7 +29,8 @@ export enum Icons {
   // Git related
   Ahead='ahead',
   Behind='behind',
-  Diverged='diverged'
+  Diverged='diverged',
+  Stash='stash',
 }
 
 export interface Icon {
@@ -74,13 +75,17 @@ export const getIcon = (type: Icons, label?: string): string => {
       color: chalk.yellow,
       icon: figures.warning, // as soon as we going to use binary file to start the app, we should change it as soon as we will be able to use figures 4.0+
     },
+    [Icons.Stash]: {
+      color: chalk.cyan,
+      icon: '$',
+    },
   } as {[x in Icons]: Icon}
   const icon = ICONS[type]
 
   return icon.color(icon.icon + (label ? SPACE + chalk.underline(label) : NIL))
 }
 
-export const getStatuses = (status: Statuses['status']): string => {
+export const getStatuses = ({status, stash}: Pick<Statuses, 'status' | 'stash'>): string => {
   const currentStatuses = []
   const getAheadBehind = (status: Statuses['status']): string => {
     switch (getRepoStatus(status)) {
@@ -94,7 +99,15 @@ export const getStatuses = (status: Statuses['status']): string => {
       return SPACE
     }
   }
+  const getStash = (stash: number) => {
+    if (stash > 0) {
+      return getIcon(Icons.Stash)
+    }
 
+    return SPACE
+  }
+
+  currentStatuses.push(getStash(stash))
   currentStatuses.push(getAheadBehind(status))
 
   return currentStatuses.join(NIL)

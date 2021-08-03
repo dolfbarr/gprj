@@ -26,6 +26,7 @@ export const findRepositories = (marks: string[], repositories: Repo[]): Repo[] 
 
 export interface Statuses {
   status: {ahead: number; behind: number};
+  stash: number;
   files: Array<{
     path: string;
   }>;
