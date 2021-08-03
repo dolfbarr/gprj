@@ -1,12 +1,12 @@
 
 import chalk from 'chalk'
 
-import {getIcon, getStatuses, Icons, Logger, padding} from '../renderer'
+import {getIcon, getStatuses, Icons, list, listItem, Logger, padding} from '../renderer'
 
 chalk.level = 0
 
 const message = 'GPRJ is awesome!'
-const {render, notification, line, lineAll, heading, done, fail, info, warn, fav, empty} = new Logger(() => null)
+const {render, notification, line, lineAll, heading, done, fail, info, warn, fav, empty, caption} = new Logger(() => null)
 
 describe('renderer', () => {
   describe('paddings', () => {
@@ -69,6 +69,34 @@ describe('renderer', () => {
     })
   })
 
+  describe('listItem', () => {
+    it('returns list item', () => {
+      expect(listItem({label: 'item', value: 2})).toEqual('2 item')
+    })
+
+    it('returns list item with icon', () => {
+      expect(listItem({icon: Icons.Heart, label: 'item', value: 2})).toEqual('2 ♥ item')
+    })
+  })
+
+  describe('list', () => {
+    it('returns empty string on empty list', () => {
+      expect(list([])).toEqual('')
+    })
+
+    it('returns list item', () => {
+      expect(list([{label: 'item', value: 2}])).toEqual('2 item')
+    })
+
+    it('returns all items with separator', () => {
+      expect(list([{label: 'item', value: 2}, {icon: Icons.Heart, label: 'item', value: 2}])).toEqual('2 item · 2 ♥ item')
+    })
+
+    it('returns all items with separator filtering empty items', () => {
+      expect(list([{label: 'item', value: 2}, {label: 'never', value: 0}, {icon: Icons.Heart, label: 'item', value: 2}])).toEqual('2 item · 2 ♥ item')
+    })
+  })
+
   describe('notification', () => {
     it('returns correct icon', () => {
       expect(notification(message, Icons.Warning)).toEqual(`  ⚠  ${message}`)
@@ -108,6 +136,12 @@ describe('renderer', () => {
   describe('heading', () => {
     it('returns heading', () => {
       expect(heading(message)).toEqual(`${message}`)
+    })
+  })
+
+  describe('caption', () => {
+    it('returns caption', () => {
+      expect(caption(message)).toEqual(`${message}`)
     })
   })
 

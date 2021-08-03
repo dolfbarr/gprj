@@ -4,14 +4,42 @@ import simpleGit from 'simple-git'
 
 import {getDB, Repo} from '../utils/database'
 import {status} from '../utils/git'
-import {getBaseName} from '../utils/helpers'
+import {getBaseName, getRepoStatus, RepoStatus} from '../utils/helpers'
 import {EntitiesPlural, messages} from '../utils/messages'
-import {getStatuses, Logger, SPACE} from '../utils/renderer'
+import {getStatuses, Icons, list, Logger, SPACE} from '../utils/renderer'
 
-export const repoLine = async (r: Repo) => {
+export interface TotalStatus {
+  ahead: number;
+  behind: number;
+  diverged: number;
+}
+
+export const repoLine = async (r: Repo, totalStatus: TotalStatus) => {
   const git = await simpleGit(r.path)
   const currentStatus = (await status(git))
-  return getStatuses({status: {ahead: currentStatus.ahead, behind: currentStatus.behind}}) + SPACE + getBaseName(r.path) + ` ${chalk.cyan(`(${currentStatus.current})`)}`
+  const gitStatus = {ahead: currentStatus.ahead, behind: currentStatus.behind}
+
+  switch (getRepoStatus(gitStatus)) {
+  case RepoStatus.Ahead:
+    totalStatus.ahead++
+    break
+  case RepoStatus.Behind:
+    totalStatus.behind++
+    break
+  case RepoStatus.Diverged:
+    totalStatus.diverged++
+    break
+  default:
+    break
+  }
+
+  return getStatuses({status: gitStatus}) + SPACE + getBaseName(r.path) + ` ${chalk.cyan(`(${currentStatus.current})`)}`
+}
+
+export const getReposLines = async (repos: Repo[]): Promise<[string[], TotalStatus]> => {
+  const totalStatus: TotalStatus = {ahead: 0, behind: 0, diverged: 0}
+
+  return new Promise(resolve => (Promise.all(repos.map(r => repoLine(r, totalStatus))).then(lines => resolve([lines, totalStatus]))))
 }
 
 export default class List extends Command {
@@ -45,10 +73,29 @@ export default class List extends Command {
 
       this.exit(0)
     } else {
+      const [lines, totalStatus] = await getReposLines(repos)
+
       empty()
       heading(messages.info.all(EntitiesPlural.Repos))
       empty()
-      Promise.all(repos.map(r => repoLine(r))).then(lines => lineAll(lines))
+      lineAll(lines)
+      empty()
+
+      if (totalStatus.ahead || totalStatus.behind || totalStatus.diverged) {
+        info(list([{
+          icon: Icons.Ahead,
+          label: '(ahead)',
+          value: totalStatus.ahead,
+        }, {
+          icon: Icons.Behind,
+          label: '(behind)',
+          value: totalStatus.behind,
+        }, {
+          icon: Icons.Diverged,
+          label: '(diverged)',
+          value: totalStatus.diverged,
+        }]))
+      }
     }
   }
 }

@@ -1,4 +1,5 @@
 /* istanbul ignore file */
+
 export enum Entities {
   Repo='Repository',
   Path='Path',

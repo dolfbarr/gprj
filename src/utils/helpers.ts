@@ -1,4 +1,5 @@
 /* istanbul ignore file */
+
 import {trimEnd} from 'lodash'
 import {sep} from 'path'
 
@@ -22,3 +23,22 @@ export const findRepositories = (marks: string[], repositories: Repo[]): Repo[] 
 
     return foundRepo
   })
+
+export interface Statuses {
+  status: {ahead: number; behind: number};
+}
+
+export enum RepoStatus {
+  Ahead='ahead',
+  Behind='behind',
+  Diverged='diverged',
+  None='none'
+}
+
+export const getRepoStatus = ({ahead, behind}: Statuses['status']): RepoStatus => {
+  if (ahead && behind) return RepoStatus.Diverged
+  if (ahead && !behind) return  RepoStatus.Ahead
+  if (!ahead && behind) return  RepoStatus.Behind
+
+  return  RepoStatus.None
+}

@@ -33,7 +33,7 @@ describe('Add Command', () => {
   beforeEach(() => {
     result = []
 
-    mockDirs({[PATH_TO_REPO]: {}})
+    mockDirs({[PATH_TO_REPO]: {}, prj: {}, repo: {}})
 
     jest
     .spyOn(process.stdout, 'write')

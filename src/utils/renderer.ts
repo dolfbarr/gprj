@@ -1,11 +1,14 @@
 import chalk, {Chalk} from 'chalk'
 import * as figures from 'figures'
 
+import {getRepoStatus, RepoStatus, Statuses} from './helpers'
 import {Alerts} from './messages'
 
 export const TAB = 2
 export const SPACE = ' '
 export const NIL = ''
+
+export const SEPARATOR = '·'
 
 export const NOTIFICATION_ICON_PADDING = 2
 export const INDEX_PADDING = 1
@@ -76,23 +79,41 @@ export const getIcon = (type: Icons, label?: string): string => {
   return icon.color(icon.icon + (label ? SPACE + chalk.underline(label) : NIL))
 }
 
-export interface Statuses {
-  status: {ahead: number; behind: number};
-}
-
-export const getStatuses = ({status: {ahead, behind}}: Statuses): string => {
+export const getStatuses = ({status}: Statuses): string => {
   const currentStatuses = []
-  const getAheadBehind = (ahead: number, behind: number): string => {
-    if (ahead && behind) return getIcon(Icons.Diverged)
-    if (ahead && !behind) return getIcon(Icons.Ahead)
-    if (!ahead && behind) return getIcon(Icons.Behind)
-
-    return SPACE
+  const getAheadBehind = (status: Statuses['status']): string => {
+    switch (getRepoStatus(status)) {
+    case RepoStatus.Ahead:
+      return getIcon(Icons.Ahead)
+    case RepoStatus.Behind:
+      return getIcon(Icons.Behind)
+    case RepoStatus.Diverged:
+      return getIcon(Icons.Diverged)
+    case RepoStatus.None:
+      return SPACE
+    }
   }
 
-  currentStatuses.push(getAheadBehind(ahead, behind))
+  currentStatuses.push(getAheadBehind(status))
 
-  return currentStatuses.join('')
+  return currentStatuses.join(NIL)
+}
+
+export interface ListItem {
+  icon?: Icons;
+  label: string;
+  value: number;
+}
+
+export const listItem = ({icon, label, value}: ListItem): string | null => {
+  return value ? `${chalk.bold(value)}${padding(icon ? getIcon(icon) : NIL, {end: icon && INDEX_PADDING, start: INDEX_PADDING})}${chalk.dim(label)}` : null
+}
+
+export const list = (items: ListItem[]): string => {
+  return items
+  .map(item => listItem(item))
+  .filter(item => item !== null && item !== NIL)
+  .join(padding(SEPARATOR, {end: INDEX_PADDING, start: INDEX_PADDING}))
 }
 
 export class Logger {
@@ -111,10 +132,12 @@ export class Logger {
 
   heading = (message: string) => this.render(chalk.bold(message), 0)
 
-  empty = (message?: string) => this.render(message || '', 0)
+  caption = (message: string) => this.render(chalk.gray(message), 0)
+
+  empty = (message?: string) => this.render(message || NIL, 0)
 
   notification = (message: string, icon?: Icons, label?: string): string =>
-    this.render(padding(icon ? getIcon(icon, label) : '', {end: NOTIFICATION_ICON_PADDING}) + message)
+    this.render(padding(icon ? getIcon(icon, label) : NIL, {end: NOTIFICATION_ICON_PADDING}) + message)
 
   done = (message: string, label?: string): string => this.notification(message, Icons.Success, label || Alerts.Done)
 

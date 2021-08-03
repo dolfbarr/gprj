@@ -23,7 +23,7 @@ describe('Remove Command', () => {
   beforeEach(() => {
     result = []
 
-    mockDirs({prj: {}, repo: {}})
+    mockDirs({prj: {}, repo: {}, unknown: {}})
 
     jest
     .spyOn(process.stdout, 'write')

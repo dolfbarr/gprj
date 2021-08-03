@@ -4,6 +4,7 @@ import {mocked} from 'ts-jest/utils'
 
 import {mockDirs} from '../../test.helpers'
 import * as db from '../../utils/database'
+import * as git from '../../utils/git'
 import {trimArray} from '../../utils/helpers'
 import List from '../list'
 
@@ -12,6 +13,7 @@ chalk.level = 0
 jest.mock('../../utils/git', () => ({
   status: jest.fn().mockResolvedValue({ahead: 10, behind: 0, current: 'main'}),
 }))
+const mockedStatus = mocked(git.status, true)
 
 jest.mock('../../utils/database', () => ({
   getDB: jest.fn().mockImplementation(() => ({
@@ -43,7 +45,25 @@ describe('List Command', () => {
 
   it('shows repos', async () => {
     await List.run([])
-    expect(trimArray(result)).toEqual(['All repositories:', '  1. ↑ repo (main)', '  2. ↑ prj (main)'])
+    expect(trimArray(result)).toEqual(['All repositories:', '  1. ↑ repo (main)', '  2. ↑ prj (main)', '  ℹ info  2 ↑ (ahead)'])
+  })
+
+  it('shows repos with behind info', async () => {
+    (mockedStatus as jest.MockInstance<any, any>).mockResolvedValue({ahead: 0, behind: 10, current: 'main'})
+    await List.run([])
+    expect(trimArray(result)).toEqual(['All repositories:', '  1. ↓ repo (main)', '  2. ↓ prj (main)', '  ℹ info  2 ↓ (behind)'])
+  })
+
+  it('shows repos with diverged info', async () => {
+    (mockedStatus as jest.MockInstance<any, any>).mockResolvedValue({ahead: 10, behind: 10, current: 'main'})
+    await List.run([])
+    expect(trimArray(result)).toEqual(['All repositories:', '  1. ⚠ repo (main)', '  2. ⚠ prj (main)', '  ℹ info  2 ⚠ (diverged)'])
+  })
+
+  it('shows repos without info', async () => {
+    (mockedStatus as jest.MockInstance<any, any>).mockResolvedValue({ahead: 0, behind: 0, current: 'main'})
+    await List.run([])
+    expect(trimArray(result)).toEqual(['All repositories:', '  1.   repo (main)', '  2.   prj (main)'])
   })
 
   it('shows placeholders with no repos', async () => {
