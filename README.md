@@ -20,7 +20,7 @@ $ npm install -g gprj
 $ gprj COMMAND
 running command...
 $ gprj (-v|--version|version)
-gprj/0.2.1 darwin-x64 node-v14.17.3
+gprj/0.2.2 darwin-x64 node-v14.17.3
 $ gprj --help [COMMAND]
 USAGE
   $ gprj COMMAND
@@ -49,7 +49,7 @@ EXAMPLE
           ✔ done  Repository has been successfully added
 ```
 
-_See code: [src/commands/add.ts](https://github.com/dolfbarr/gprj/blob/v0.2.1/src/commands/add.ts)_
+_See code: [src/commands/add.ts](https://github.com/dolfbarr/gprj/blob/v0.2.2/src/commands/add.ts)_
 
 ## `gprj help [COMMAND]`
 
@@ -83,9 +83,12 @@ ALIASES
   $ gprj ls
 
 EXAMPLE
-  $ gprj add /path/to/repo
-          ✔ done  Repository has been successfully added
+  $ gprj list
+
+          All repositories:
+
+            1. gprj (main)
 ```
 
-_See code: [src/commands/list.ts](https://github.com/dolfbarr/gprj/blob/v0.2.1/src/commands/list.ts)_
+_See code: [src/commands/list.ts](https://github.com/dolfbarr/gprj/blob/v0.2.2/src/commands/list.ts)_
 <!-- commandsstop -->
