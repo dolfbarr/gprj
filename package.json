@@ -51,7 +51,15 @@
   ],
   "homepage": "https://github.com/dolfbarr/gprj",
   "keywords": [
-    "oclif"
+    "oclif",
+    "cli",
+    "git",
+    "project",
+    "git cli",
+    "repository",
+    "github",
+    "gitlab",
+    "bitbucket"
   ],
   "license": "MIT",
   "main": "lib/index.js",
