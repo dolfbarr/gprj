@@ -32,6 +32,7 @@ export default class List extends Command {
   }
 
   async run() {
+    this.parse(List)
     const {info, fav, empty, lineAll, heading} = new Logger(this.log)
 
     const db = await getDB(this.config.dataDir)
