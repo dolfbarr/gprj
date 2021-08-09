@@ -78,11 +78,15 @@ describe('renderer', () => {
 
   describe('getModified', () => {
     it('returns modified', () => {
-      expect(getModified([{path: '/path/to/file'}])).toEqual('*')
+      expect(getModified(1)).toEqual('*')
+    })
+
+    it('returns modified and conflicted', () => {
+      expect(getModified(1, 2)).toEqual('*')
     })
 
     it('returns NIL if not modified', () => {
-      expect(getModified([])).toEqual('')
+      expect(getModified(0)).toEqual('')
     })
   })
 

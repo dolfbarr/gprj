@@ -34,9 +34,7 @@ export const repoLine = async (r: Repo, totalStatus: TotalStatus) => {
     break
   }
 
-  const modified = getModified(currentStatus.files.map(file => ({
-    path: file.path,
-  })))
+  const modified = getModified(currentStatus.files.length, currentStatus.conflicted.length)
 
   return `${getStatuses({stash: currentStashList.total, status: gitStatus})} ${getBaseName(r.path)}${modified} ${chalk.magenta(`(${currentStatus.current})`)}`
 }

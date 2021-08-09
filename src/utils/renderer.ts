@@ -9,7 +9,7 @@ export const SPACE = ' '
 export const NIL = ''
 
 export const SEPARATOR = '·'
-export const MODIFiED_ICON = '*'
+export const MODIFIED_ICON = '*'
 
 export const NOTIFICATION_ICON_PADDING = 2
 export const INDEX_PADDING = 1
@@ -113,9 +113,9 @@ export const getStatuses = ({status, stash}: Pick<Statuses, 'status' | 'stash'>)
   return currentStatuses.join(NIL)
 }
 
-export const getModified = (modified: Statuses['files']) => {
-  if (modified.length > 0) {
-    return chalk.green(MODIFiED_ICON)
+export const getModified = (modified: number, conflicted?: number) => {
+  if (modified > 0) {
+    return Number(conflicted) > 0 ? chalk.red(MODIFIED_ICON) : chalk.green(MODIFIED_ICON)
   }
   return NIL
 }
