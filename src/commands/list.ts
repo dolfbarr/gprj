@@ -12,6 +12,9 @@ export interface TotalStatus {
   ahead: number;
   behind: number;
   diverged: number;
+  stashed: number;
+  modified: number;
+  conflicted: number;
 }
 
 export const repoLine = async (r: Repo, totalStatus: TotalStatus) => {
@@ -34,13 +37,20 @@ export const repoLine = async (r: Repo, totalStatus: TotalStatus) => {
     break
   }
 
+  if (currentStashList.total > 0) totalStatus.stashed++
+  if (currentStatus.files.length > 0) totalStatus.modified++
+  if (currentStatus.conflicted.length > 0) {
+    totalStatus.modified--
+    totalStatus.conflicted++
+  }
+
   const modified = getModified(currentStatus.files.length, currentStatus.conflicted.length)
 
   return `${getStatuses({stash: currentStashList.total, status: gitStatus})} ${getBaseName(r.path)}${modified} ${chalk.magenta(`(${currentStatus.current})`)}`
 }
 
 export const getReposLines = async (repos: Repo[]): Promise<[string[], TotalStatus]> => {
-  const totalStatus: TotalStatus = {ahead: 0, behind: 0, diverged: 0}
+  const totalStatus: TotalStatus = {ahead: 0, behind: 0, conflicted: 0, diverged: 0, modified: 0, stashed: 0}
 
   return new Promise(resolve => (Promise.all(repos.map(r => repoLine(r, totalStatus))).then(lines => resolve([lines, totalStatus]))))
 }
@@ -84,7 +94,7 @@ export default class List extends Command {
       lineAll(lines)
       empty()
 
-      if (totalStatus.ahead || totalStatus.behind || totalStatus.diverged) {
+      if (Object.values(totalStatus).some(status => status > 0)) {
         info(list([{
           icon: Icons.Ahead,
           label: '(ahead)',
@@ -97,6 +107,18 @@ export default class List extends Command {
           icon: Icons.Diverged,
           label: '(diverged)',
           value: totalStatus.diverged,
+        }, {
+          icon: Icons.Stash,
+          label: '(stashed)',
+          value: totalStatus.stashed,
+        }, {
+          icon: Icons.Modified,
+          label: '(modified)',
+          value: totalStatus.modified,
+        },  {
+          icon: Icons.Conflicted,
+          label: '(conflicted)',
+          value: totalStatus.conflicted,
         }]))
       }
     }

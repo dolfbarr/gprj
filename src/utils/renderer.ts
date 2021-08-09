@@ -9,7 +9,6 @@ export const SPACE = ' '
 export const NIL = ''
 
 export const SEPARATOR = '·'
-export const MODIFIED_ICON = '*'
 
 export const NOTIFICATION_ICON_PADDING = 2
 export const INDEX_PADDING = 1
@@ -31,6 +30,8 @@ export enum Icons {
   Behind='behind',
   Diverged='diverged',
   Stash='stash',
+  Modified='modified',
+  Conflicted='conflicted',
 
   // Misc
   ArrowRight='arrowRight'
@@ -82,6 +83,14 @@ export const getIcon = (type: Icons, label?: string): string => {
       icon: '$',
       style: chalk.cyan,
     },
+    [Icons.Modified]: {
+      icon: '*',
+      style: chalk.green,
+    },
+    [Icons.Conflicted]: {
+      icon: '*',
+      style: chalk.red,
+    },
 
     // Misc
     [Icons.ArrowRight]: {
@@ -124,7 +133,7 @@ export const getStatuses = ({status, stash}: Pick<Statuses, 'status' | 'stash'>)
 
 export const getModified = (modified: number, conflicted?: number) => {
   if (modified > 0) {
-    return Number(conflicted) > 0 ? chalk.red(MODIFIED_ICON) : chalk.green(MODIFIED_ICON)
+    return Number(conflicted) > 0 ? getIcon(Icons.Conflicted) : getIcon(Icons.Modified)
   }
   return NIL
 }

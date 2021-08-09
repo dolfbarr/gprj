@@ -10,10 +10,10 @@ import List from '../list'
 
 chalk.level = 0
 
-const statusMock = {ahead: 10, behind: 0, conflicted: [], current: 'main', files: []}
+const statusMock = {ahead: 0, behind: 0, conflicted: [], current: 'main', files: []}
 jest.mock('../../utils/git', () => ({
-  stashList: jest.fn().mockResolvedValue({total: 0}),
-  status: jest.fn().mockImplementation(() => Promise.resolve(statusMock)),
+  stashList: jest.fn(),
+  status: jest.fn(),
 }))
 const mockedStatus = mocked(git.status, true)
 const mockedStashList = mocked(git.stashList, true)
@@ -21,7 +21,7 @@ const mockedStashList = mocked(git.stashList, true)
 jest.mock('../../utils/database', () => ({
   getDB: jest.fn().mockImplementation(() => ({
     get: jest.fn().mockReturnThis(),
-    value: () => [{dateAdded: 0, path: 'repo'}, {dateAdded: 0, path: 'prj'}] as db.Repo[],
+    value: jest.fn(),
   })),
 }))
 const mockGetDB = mocked(db.getDB, true)
@@ -39,7 +39,14 @@ describe('List Command', () => {
     .mockImplementation((val: string) => {
       result.push(val)
       return true
-    })
+    });
+
+    (mockedStatus as jest.MockInstance<any, any>).mockImplementation(() => Promise.resolve(statusMock));
+    (mockedStashList as jest.MockInstance<any, any>).mockResolvedValue({total: 0});
+    (mockGetDB as jest.MockInstance<any, any>).mockImplementation(() => ({
+      get: jest.fn().mockReturnThis(),
+      value: () => [{dateAdded: 0, path: 'repo'}, {dateAdded: 0, path: 'prj'}] as db.Repo[],
+    }))
   })
 
   afterEach(() => {
@@ -48,11 +55,17 @@ describe('List Command', () => {
 
   it('shows repos', async () => {
     await List.run([])
+    expect(trimArray(result)).toEqual(['All repositories:', '  1.    repo (main)', '  2.    prj (main)'])
+  })
+
+  it('shows repos with ahead info', async () => {
+    (mockedStatus as jest.MockInstance<any, any>).mockResolvedValue({...statusMock, ahead: 10})
+    await List.run([])
     expect(trimArray(result)).toEqual(['All repositories:', '  1.  ↑ repo (main)', '  2.  ↑ prj (main)', '  ℹ info  2 ↑ (ahead)'])
   })
 
   it('shows repos with behind info', async () => {
-    (mockedStatus as jest.MockInstance<any, any>).mockResolvedValue({...statusMock, ahead: 0, behind: 10})
+    (mockedStatus as jest.MockInstance<any, any>).mockResolvedValue({...statusMock, behind: 10})
     await List.run([])
     expect(trimArray(result)).toEqual(['All repositories:', '  1.  ↓ repo (main)', '  2.  ↓ prj (main)', '  ℹ info  2 ↓ (behind)'])
   })
@@ -63,28 +76,22 @@ describe('List Command', () => {
     expect(trimArray(result)).toEqual(['All repositories:', '  1.  ⚠ repo (main)', '  2.  ⚠ prj (main)', '  ℹ info  2 ⚠ (diverged)'])
   })
 
-  it('shows repos without info', async () => {
-    (mockedStatus as jest.MockInstance<any, any>).mockResolvedValue({...statusMock, ahead: 0, behind: 0})
+  it('shows repos with modified info', async () => {
+    (mockedStatus as jest.MockInstance<any, any>).mockResolvedValue({...statusMock, files: [{path: '/path/to/file'}]})
     await List.run([])
-    expect(trimArray(result)).toEqual(['All repositories:', '  1.    repo (main)', '  2.    prj (main)'])
+    expect(trimArray(result)).toEqual(['All repositories:', '  1.    repo* (main)', '  2.    prj* (main)', '  ℹ info  2 * (modified)'])
   })
 
-  it('shows repos with modified files', async () => {
-    (mockedStatus as jest.MockInstance<any, any>).mockResolvedValue({...statusMock, ahead: 0, behind: 0,  files: [{path: '/path/to/file'}]})
+  it('shows repos with conflicted info', async () => {
+    (mockedStatus as jest.MockInstance<any, any>).mockResolvedValue({...statusMock, conflicted: ['/path/to/file'], files: [{path: '/path/to/file'}]})
     await List.run([])
-    expect(trimArray(result)).toEqual(['All repositories:', '  1.    repo* (main)', '  2.    prj* (main)'])
+    expect(trimArray(result)).toEqual(['All repositories:', '  1.    repo* (main)', '  2.    prj* (main)', '  ℹ info  2 * (conflicted)'])
   })
 
-  it('shows repos with conflicted files', async () => {
-    (mockedStatus as jest.MockInstance<any, any>).mockResolvedValue({...statusMock, ahead: 0, behind: 0,  conflicted: ['/path/to/file'], files: [{path: '/path/to/file'}]})
-    await List.run([])
-    expect(trimArray(result)).toEqual(['All repositories:', '  1.    repo* (main)', '  2.    prj* (main)'])
-  })
-
-  it('shows repos with stashes', async () => {
+  it('shows repos with stashed info', async () => {
     (mockedStashList as jest.MockInstance<any, any>).mockResolvedValue({total: 10})
     await List.run([])
-    expect(trimArray(result)).toEqual(['All repositories:', '  1. $  repo* (main)', '  2. $  prj* (main)'])
+    expect(trimArray(result)).toEqual(['All repositories:', '  1. $  repo (main)', '  2. $  prj (main)',  '  ℹ info  2 $ (stashed)'])
   })
 
   it('shows placeholders with no repos', async () => {
