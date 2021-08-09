@@ -14,6 +14,8 @@ export enum Alerts {
   Fail='fail',
   Warn='warn',
   Info='info',
+
+  Update='update'
 }
 
 export const messages = {

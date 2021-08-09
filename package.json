@@ -13,12 +13,14 @@
     "@oclif/plugin-help": "^3",
     "@types/lodash": "^4.14.171",
     "@types/lowdb": "1.0.9",
+    "@types/update-notifier": "^5.1.0",
     "chalk": "4.1.1",
     "figures": "3.2.0",
     "lodash": "^4.17.21",
     "lowdb": "1.0.0",
     "simple-git": "2.41.1",
-    "tslib": "^1"
+    "tslib": "^1",
+    "update-notifier": "^5.1.0"
   },
   "devDependencies": {
     "@oclif/dev-cli": "^1",
@@ -67,7 +69,10 @@
     "commands": "./lib/commands",
     "bin": "gprj",
     "hooks": {
-      "init": "./lib/hooks/init/db"
+      "init": [
+        "./lib/hooks/init/db",
+        "./lib/hooks/init/update"
+      ]
     },
     "plugins": [
       "@oclif/plugin-help"

@@ -31,58 +31,67 @@ export enum Icons {
   Behind='behind',
   Diverged='diverged',
   Stash='stash',
+
+  // Misc
+  ArrowRight='arrowRight'
 }
 
 export interface Icon {
   icon: string;
-  color: Chalk;
+  style: Chalk;
   label?: string;
 }
 
 export const getIcon = (type: Icons, label?: string): string => {
   const ICONS = {
     [Icons.Success]: {
-      color: chalk.green,
       icon: figures.tick,
+      style: chalk.green,
     },
     [Icons.Info]: {
-      color: chalk.blue,
       icon: figures.info,
+      style: chalk.blue,
     },
     [Icons.Warning]: {
-      color: chalk.yellow,
       icon: figures.warning,
+      style: chalk.yellow,
     },
     [Icons.Fail]: {
-      color: chalk.red,
       icon: figures.cross,
+      style: chalk.red,
     },
     [Icons.Heart]: {
-      color: chalk.yellow,
       icon: figures.heart,
+      style: chalk.yellow,
     },
 
     // Git related
     [Icons.Ahead]: {
-      color: chalk.green,
       icon: figures.arrowUp,
+      style: chalk.green,
     },
     [Icons.Behind]: {
-      color: chalk.red,
       icon: figures.arrowDown,
+      style: chalk.red,
     },
     [Icons.Diverged]: {
-      color: chalk.yellow,
       icon: figures.warning, // as soon as we going to use binary file to start the app, we should change it as soon as we will be able to use figures 4.0+
+      style: chalk.yellow,
     },
     [Icons.Stash]: {
-      color: chalk.cyan,
       icon: '$',
+      style: chalk.cyan,
+    },
+
+    // Misc
+    [Icons.ArrowRight]: {
+      icon: figures.arrowRight,
+      style: chalk.reset,
     },
   } as {[x in Icons]: Icon}
   const icon = ICONS[type]
 
-  return icon.color(icon.icon + (label ? SPACE + chalk.underline(label) : NIL))
+  return icon.style(icon.icon + (label ? SPACE + chalk.underline(label) : NIL))
 }
 
 export const getStatuses = ({status, stash}: Pick<Statuses, 'status' | 'stash'>): string => {
@@ -136,6 +145,16 @@ export const list = (items: ListItem[]): string => {
   .filter(item => item !== null && item !== NIL)
   .join(padding(SEPARATOR, {end: INDEX_PADDING, start: INDEX_PADDING}))
 }
+
+export interface UpdateInfo {
+  version: {
+    current: string;
+    latest: string;
+  };
+}
+
+export const update = ({version: {current, latest}}: UpdateInfo) =>
+  `Update available: ${chalk.dim(current)} ${getIcon(Icons.ArrowRight)} ${chalk.green(latest)}`
 
 export class Logger {
   logger: (m?: string) => any

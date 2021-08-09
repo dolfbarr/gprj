@@ -1,7 +1,7 @@
 
 import chalk from 'chalk'
 
-import {getIcon, getModified, getStatuses, Icons, list, listItem, Logger, padding} from '../renderer'
+import {getIcon, getModified, getStatuses, Icons, list, listItem, Logger, padding, update} from '../renderer'
 
 chalk.level = 0
 
@@ -115,6 +115,12 @@ describe('renderer', () => {
 
     it('returns all items with separator filtering empty items', () => {
       expect(list([{label: 'item', value: 2}, {label: 'never', value: 0}, {icon: Icons.Heart, label: 'item', value: 2}])).toEqual('2 item · 2 ♥ item')
+    })
+  })
+
+  describe('update', () => {
+    it('renders update', () => {
+      expect(update({version: {current: '0.0.1', latest: '0.0.2'}})).toEqual('Update available: 0.0.1 → 0.0.2')
     })
   })
 
