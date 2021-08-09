@@ -30,7 +30,7 @@ $ npm install -g gprj
 $ gprj COMMAND
 running command...
 $ gprj (-v|--version|version)
-gprj/0.6.4 darwin-x64 node-v14.17.3
+gprj/0.7.0 darwin-x64 node-v14.17.3
 $ gprj --help [COMMAND]
 USAGE
   $ gprj COMMAND
@@ -42,7 +42,7 @@ USAGE
 * [`gprj add`](#gprj-add)
 * [`gprj help [COMMAND]`](#gprj-help-command)
 * [`gprj list`](#gprj-list)
-* [`gprj raw [FILE]`](#gprj-raw-file)
+* [`gprj raw`](#gprj-raw)
 * [`gprj remove`](#gprj-remove)
 
 ## `gprj add`
@@ -61,7 +61,7 @@ EXAMPLE
           ✔ done  Repository has been successfully added
 ```
 
-_See code: [src/commands/add.ts](https://github.com/dolfbarr/gprj/blob/v0.6.4/src/commands/add.ts)_
+_See code: [src/commands/add.ts](https://github.com/dolfbarr/gprj/blob/v0.7.0/src/commands/add.ts)_
 
 ## `gprj help [COMMAND]`
 
@@ -102,21 +102,34 @@ EXAMPLE
             1. gprj (main)
 ```
 
-_See code: [src/commands/list.ts](https://github.com/dolfbarr/gprj/blob/v0.6.4/src/commands/list.ts)_
+_See code: [src/commands/list.ts](https://github.com/dolfbarr/gprj/blob/v0.7.0/src/commands/list.ts)_
 
-## `gprj raw [FILE]`
+## `gprj raw`
 
-describe the command here
+execute a shell command in repo path
 
 ```
 USAGE
-  $ gprj raw [FILE]
+  $ gprj raw
 
 OPTIONS
-  -h, --help       show CLI help
+  -h, --help             show CLI help
+  -t, --timeout=timeout  [default: 5000] timeout in ms
+  -x, --execute=execute  (required) command to execute
+
+ALIASES
+  $ gprj r
+
+EXAMPLE
+  $ gprj raw  /path/to/repo1 /path/to/repo2 --execute='yarn test' --timeout=2000
+
+          ✔ repo1
+          ✔ repo2
+
+          ✔ done  All commands has been successfully executed
 ```
 
-_See code: [src/commands/raw.ts](https://github.com/dolfbarr/gprj/blob/v0.6.4/src/commands/raw.ts)_
+_See code: [src/commands/raw.ts](https://github.com/dolfbarr/gprj/blob/v0.7.0/src/commands/raw.ts)_
 
 ## `gprj remove`
 
@@ -137,7 +150,7 @@ EXAMPLE
           ✔ done  All repositories have been successfully removed
 ```
 
-_See code: [src/commands/remove.ts](https://github.com/dolfbarr/gprj/blob/v0.6.4/src/commands/remove.ts)_
+_See code: [src/commands/remove.ts](https://github.com/dolfbarr/gprj/blob/v0.7.0/src/commands/remove.ts)_
 <!-- commandsstop -->
 
 # Thanks
