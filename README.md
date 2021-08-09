@@ -20,7 +20,7 @@ $ npm install -g gprj
 $ gprj COMMAND
 running command...
 $ gprj (-v|--version|version)
-gprj/0.6.0 darwin-x64 node-v14.17.3
+gprj/0.6.1 darwin-x64 node-v14.17.3
 $ gprj --help [COMMAND]
 USAGE
   $ gprj COMMAND
@@ -50,7 +50,7 @@ EXAMPLE
           ✔ done  Repository has been successfully added
 ```
 
-_See code: [src/commands/add.ts](https://github.com/dolfbarr/gprj/blob/v0.6.0/src/commands/add.ts)_
+_See code: [src/commands/add.ts](https://github.com/dolfbarr/gprj/blob/v0.6.1/src/commands/add.ts)_
 
 ## `gprj help [COMMAND]`
 
@@ -91,7 +91,7 @@ EXAMPLE
             1. gprj (main)
 ```
 
-_See code: [src/commands/list.ts](https://github.com/dolfbarr/gprj/blob/v0.6.0/src/commands/list.ts)_
+_See code: [src/commands/list.ts](https://github.com/dolfbarr/gprj/blob/v0.6.1/src/commands/list.ts)_
 
 ## `gprj remove`
 
@@ -112,5 +112,5 @@ EXAMPLE
           ✔ done  All repositories have been successfully removed
 ```
 
-_See code: [src/commands/remove.ts](https://github.com/dolfbarr/gprj/blob/v0.6.0/src/commands/remove.ts)_
+_See code: [src/commands/remove.ts](https://github.com/dolfbarr/gprj/blob/v0.6.1/src/commands/remove.ts)_
 <!-- commandsstop -->
