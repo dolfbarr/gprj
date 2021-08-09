@@ -22,11 +22,11 @@ const mockedRepositories: Repo[] = [{
 describe('helpers', () => {
   describe('findRepositories', () => {
     it('finds a repository', () => {
-      expect(findRepositories(['repo'], mockedRepositories)).toEqual([mockedRepositories[0]])
+      expect(findRepositories(['repo'], mockedRepositories)).toEqual([[mockedRepositories[0], 1]])
     })
 
     it('finds a repository by index', () => {
-      expect(findRepositories(['@1'], mockedRepositories)).toEqual([mockedRepositories[0]])
+      expect(findRepositories(['@1'], mockedRepositories)).toEqual([[mockedRepositories[0], 1]])
     })
 
     it('fails to find a repository', () => {

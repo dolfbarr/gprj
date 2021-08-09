@@ -42,6 +42,7 @@ USAGE
 * [`gprj add`](#gprj-add)
 * [`gprj help [COMMAND]`](#gprj-help-command)
 * [`gprj list`](#gprj-list)
+* [`gprj raw [FILE]`](#gprj-raw-file)
 * [`gprj remove`](#gprj-remove)
 
 ## `gprj add`
@@ -102,6 +103,20 @@ EXAMPLE
 ```
 
 _See code: [src/commands/list.ts](https://github.com/dolfbarr/gprj/blob/v0.6.4/src/commands/list.ts)_
+
+## `gprj raw [FILE]`
+
+describe the command here
+
+```
+USAGE
+  $ gprj raw [FILE]
+
+OPTIONS
+  -h, --help       show CLI help
+```
+
+_See code: [src/commands/raw.ts](https://github.com/dolfbarr/gprj/blob/v0.6.4/src/commands/raw.ts)_
 
 ## `gprj remove`
 

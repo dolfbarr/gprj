@@ -11,17 +11,19 @@ export const INDEX_MARK = '@'
 export const getBaseName = (dirPath: string) => dirPath.split(sep).pop() || dirPath
 export const trimArray = (arr: string[]): string[] => arr.map(l => trimEnd(l)).filter(l => l)
 
-export const findRepositories = (marks: string[], repositories: Repo[]): Repo[] =>
-  marks.map((mark: string): Repo => {
-    const foundRepo = mark.startsWith(INDEX_MARK) ?
-      repositories[Number(mark.slice(1)) - 1] :
-      repositories.find(r => r.path === mark || getBaseName(r.path) === mark)
+export const findRepositories = (marks: string[], repositories: Repo[]): [Repo, number][] =>
+  marks.map((mark: string): [Repo, number] => {
+    const foundRepoIndex = mark.startsWith(INDEX_MARK) ?
+      Number(mark.slice(1)) - 1 :
+      repositories.findIndex(r => r.path === mark || getBaseName(r.path) === mark)
+
+    const foundRepo = repositories?.[foundRepoIndex]
 
     if (!foundRepo) {
       throw new Error(messages.errors.notExist(Entities.Repo) + ': ' + mark)
     }
 
-    return foundRepo
+    return [foundRepo, foundRepoIndex + 1]
   })
 
 export interface Statuses {
