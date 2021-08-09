@@ -1,4 +1,4 @@
-gprj
+GPRJ
 ====
 
 Clean &amp; simple CLI git multi project manager
@@ -10,9 +10,19 @@ Clean &amp; simple CLI git multi project manager
 [![Test](https://github.com/dolfbarr/gprj/actions/workflows/push.yaml/badge.svg?branch=main&event=push)](https://github.com/dolfbarr/gprj/actions/workflows/push.yaml)
 
 <!-- toc -->
+* [Installation](#installation)
 * [Usage](#usage)
 * [Commands](#commands)
+* [Thanks](#thanks)
+* [License](#license)
 <!-- tocstop -->
+
+# Installation
+
+```sh
+$ npm install gprj -g
+```
+
 # Usage
 <!-- usage -->
 ```sh-session
@@ -114,3 +124,12 @@ EXAMPLE
 
 _See code: [src/commands/remove.ts](https://github.com/dolfbarr/gprj/blob/v0.6.3/src/commands/remove.ts)_
 <!-- commandsstop -->
+
+# Thanks
+- GPRJ is inspired a lot by [gita](https://github.com/nosarthur/gita) and [taskbook](https://github.com/klaussinani/taskbook).
+- The project is built upon many libs and thanks all the authors!
+- Another round of thanks to all the contributors!
+
+# License
+
+Released under [the MIT license](LICENSE).
