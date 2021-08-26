@@ -15,11 +15,10 @@ export default class Raw extends Command {
   static examples = [
     `$ gprj raw  /path/to/repo1 /path/to/repo2 --execute='yarn test' --timeout=2000
 
-       ✔ repo1
-       ✔ repo2
+ ✔ repo1
+ ✔ repo2
 
-       ✔ done  All commands has been successfully executed
-    `,
+ ✔ done  All commands has been successfully executed`,
   ]
 
   static aliases = ['r']

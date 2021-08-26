@@ -61,9 +61,9 @@ export default class List extends Command {
   static examples = [
     `$ gprj list
 
-       All repositories:
+All repositories:
 
-         1. gprj (main)`,
+ 1. gprj (main)`,
   ]
 
   static aliases = ['ls']

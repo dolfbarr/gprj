@@ -18,7 +18,7 @@ export default class Add extends Command {
 
   static examples = [
     `$ gprj add /path/to/repo
-       ✔ done  Repository has been successfully added`,
+ ✔ done  Repository has been successfully added`,
   ]
 
   static flags = {

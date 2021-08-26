@@ -10,7 +10,7 @@ export default class Remove extends Command {
 
   static examples = [
     `$ gprj remove /path/to/repo ${INDEX_MARK}2 repo
-       ✔ done  All repositories have been successfully removed`,
+ ✔ done  All repositories have been successfully removed`,
   ]
 
   static aliases = ['rm']
