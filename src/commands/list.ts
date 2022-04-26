@@ -1,5 +1,6 @@
 import {Command, flags} from '@oclif/command'
 import chalk from 'chalk'
+import fs from 'fs'
 import simpleGit from 'simple-git'
 
 import {getDB, Repo} from '../utils/database'
@@ -18,6 +19,9 @@ export interface TotalStatus {
 }
 
 export const repoLine = async (r: Repo, totalStatus: TotalStatus) => {
+  if (!fs.existsSync(r.path)) {
+    return `${chalk.red(r.path)}`
+  }
   const git = await simpleGit(r.path)
   const currentStatus = (await status(git))
   const currentStashList = (await stashList(git))
