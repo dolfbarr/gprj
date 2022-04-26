@@ -30,7 +30,7 @@ $ npm install -g gprj
 $ gprj COMMAND
 running command...
 $ gprj (-v|--version|version)
-gprj/0.7.0 darwin-x64 node-v14.17.3
+gprj/0.7.1 darwin-x64 node-v14.17.3
 $ gprj --help [COMMAND]
 USAGE
   $ gprj COMMAND
@@ -58,10 +58,10 @@ OPTIONS
 
 EXAMPLE
   $ gprj add /path/to/repo
-          ✔ done  Repository has been successfully added
+    ✔ done  Repository has been successfully added
 ```
 
-_See code: [src/commands/add.ts](https://github.com/dolfbarr/gprj/blob/v0.7.0/src/commands/add.ts)_
+_See code: [src/commands/add.ts](https://github.com/dolfbarr/gprj/blob/v0.7.1/src/commands/add.ts)_
 
 ## `gprj help [COMMAND]`
 
@@ -97,12 +97,12 @@ ALIASES
 EXAMPLE
   $ gprj list
 
-          All repositories:
+  All repositories:
 
-            1. gprj (main)
+    1. gprj (main)
 ```
 
-_See code: [src/commands/list.ts](https://github.com/dolfbarr/gprj/blob/v0.7.0/src/commands/list.ts)_
+_See code: [src/commands/list.ts](https://github.com/dolfbarr/gprj/blob/v0.7.1/src/commands/list.ts)_
 
 ## `gprj raw`
 
@@ -123,13 +123,13 @@ ALIASES
 EXAMPLE
   $ gprj raw  /path/to/repo1 /path/to/repo2 --execute='yarn test' --timeout=2000
 
-          ✔ repo1
-          ✔ repo2
+    ✔ repo1
+    ✔ repo2
 
-          ✔ done  All commands has been successfully executed
+    ✔ done  All commands has been successfully executed
 ```
 
-_See code: [src/commands/raw.ts](https://github.com/dolfbarr/gprj/blob/v0.7.0/src/commands/raw.ts)_
+_See code: [src/commands/raw.ts](https://github.com/dolfbarr/gprj/blob/v0.7.1/src/commands/raw.ts)_
 
 ## `gprj remove`
 
@@ -147,10 +147,10 @@ ALIASES
 
 EXAMPLE
   $ gprj remove /path/to/repo @2 repo
-          ✔ done  All repositories have been successfully removed
+    ✔ done  All repositories have been successfully removed
 ```
 
-_See code: [src/commands/remove.ts](https://github.com/dolfbarr/gprj/blob/v0.7.0/src/commands/remove.ts)_
+_See code: [src/commands/remove.ts](https://github.com/dolfbarr/gprj/blob/v0.7.1/src/commands/remove.ts)_
 <!-- commandsstop -->
 
 # Thanks
