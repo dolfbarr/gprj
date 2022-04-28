@@ -29,8 +29,8 @@ $ npm install gprj -g
 $ npm install -g gprj
 $ gprj COMMAND
 running command...
-$ gprj (-v|--version|version)
-gprj/0.7.1 darwin-x64 node-v14.17.3
+$ gprj (--version|-v)
+gprj/1.0.0 darwin-x64 node-v14.17.3
 $ gprj --help [COMMAND]
 USAGE
   $ gprj COMMAND
@@ -39,118 +39,16 @@ USAGE
 <!-- usagestop -->
 # Commands
 <!-- commands -->
-* [`gprj add`](#gprj-add)
-* [`gprj help [COMMAND]`](#gprj-help-command)
-* [`gprj list`](#gprj-list)
-* [`gprj raw`](#gprj-raw)
-* [`gprj remove`](#gprj-remove)
+* [`gprj version`](#gprj-version)
 
-## `gprj add`
-
-adds repository to local database
+## `gprj version`
 
 ```
 USAGE
-  $ gprj add
-
-OPTIONS
-  -h, --help  show CLI help
-
-EXAMPLE
-  $ gprj add /path/to/repo
-    ✔ done  Repository has been successfully added
+  $ gprj version
 ```
 
-_See code: [src/commands/add.ts](https://github.com/dolfbarr/gprj/blob/v0.7.1/src/commands/add.ts)_
-
-## `gprj help [COMMAND]`
-
-display help for gprj
-
-```
-USAGE
-  $ gprj help [COMMAND]
-
-ARGUMENTS
-  COMMAND  command to show help for
-
-OPTIONS
-  --all  see all commands in CLI
-```
-
-_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.2/src/commands/help.ts)_
-
-## `gprj list`
-
-lists all repositories
-
-```
-USAGE
-  $ gprj list
-
-OPTIONS
-  -h, --help  show CLI help
-
-ALIASES
-  $ gprj ls
-
-EXAMPLE
-  $ gprj list
-
-  All repositories:
-
-    1. gprj (main)
-```
-
-_See code: [src/commands/list.ts](https://github.com/dolfbarr/gprj/blob/v0.7.1/src/commands/list.ts)_
-
-## `gprj raw`
-
-execute a shell command in repo path
-
-```
-USAGE
-  $ gprj raw
-
-OPTIONS
-  -h, --help             show CLI help
-  -t, --timeout=timeout  [default: 5000] timeout in ms
-  -x, --execute=execute  (required) command to execute
-
-ALIASES
-  $ gprj r
-
-EXAMPLE
-  $ gprj raw  /path/to/repo1 /path/to/repo2 --execute='yarn test' --timeout=2000
-
-    ✔ repo1
-    ✔ repo2
-
-    ✔ done  All commands has been successfully executed
-```
-
-_See code: [src/commands/raw.ts](https://github.com/dolfbarr/gprj/blob/v0.7.1/src/commands/raw.ts)_
-
-## `gprj remove`
-
-removes repository from local database
-
-```
-USAGE
-  $ gprj remove
-
-OPTIONS
-  -h, --help  show CLI help
-
-ALIASES
-  $ gprj rm
-
-EXAMPLE
-  $ gprj remove /path/to/repo @2 repo
-    ✔ done  All repositories have been successfully removed
-```
-
-_See code: [src/commands/remove.ts](https://github.com/dolfbarr/gprj/blob/v0.7.1/src/commands/remove.ts)_
+_See code: [@oclif/plugin-version](https://github.com/oclif/plugin-version/blob/v1.0.4/src/commands/version.ts)_
 <!-- commandsstop -->
 
 # Thanks
