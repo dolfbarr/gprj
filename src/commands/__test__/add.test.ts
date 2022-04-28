@@ -36,7 +36,7 @@ describe('Add Command', () => {
 
     jest
     .spyOn(process.stdout, 'write')
-    .mockImplementation((val: string) => {
+    .mockImplementation((val: any) => {
       result.push(val)
       return true
     })
@@ -68,7 +68,7 @@ describe('Add Command', () => {
 
     it('no dir', async () => {
       mockFS.restore()
-      mockDirs()
+      mockDirs({})
 
       try {
         await Add.run([PATH_TO_REPO])

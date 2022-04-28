@@ -29,7 +29,7 @@ describe('Raw Command', () => {
 
     jest
     .spyOn(process.stdout, 'write')
-    .mockImplementation((val: string) => {
+    .mockImplementation((val: any) => {
       result.push(val)
       return true
     });

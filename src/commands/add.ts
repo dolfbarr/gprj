@@ -1,6 +1,6 @@
 import {Command, Flags} from '@oclif/core'
 import fs from 'fs'
-import {resolve} from 'path'
+import path from 'path'
 import simpleGit from 'simple-git'
 
 import {getDB} from '../utils/database'
@@ -36,7 +36,7 @@ export default class Add extends Command {
     }
 
     await Promise.all(argv.map(async (argPath: string) => {
-      const repoPath = resolve(process.cwd(), argPath)
+      const repoPath = path.resolve(process.cwd(), argPath)
       if (!fs.existsSync(repoPath)) {
         throw new Error(messages.errors.dirNotExist())
       }
@@ -46,7 +46,7 @@ export default class Add extends Command {
       }
 
       const db = await getDB(this.config.dataDir)
-      if (db.get('repositories').value().find(r => r.path === repoPath)) {
+      if (db.get('repositories').value().some(r => r.path === repoPath)) {
         throw new Error(messages.errors.alreadyExist(Entities.Repo))
       }
 

@@ -55,7 +55,7 @@ export default class Raw extends Command {
 
             try {
               return await subprocess
-            } catch (error) {
+            } catch {
               return Promise.reject(new Error(messages.errors.timeout()))
             }
           },

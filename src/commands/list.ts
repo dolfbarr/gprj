@@ -22,6 +22,7 @@ export const repoLine = async (r: Repo, totalStatus: TotalStatus) => {
   if (!fs.existsSync(r.path)) {
     return `${chalk.red(r.path)}`
   }
+
   const git = await simpleGit(r.path)
   const currentStatus = (await status(git))
   const currentStashList = (await stashList(git))
@@ -56,7 +57,7 @@ export const repoLine = async (r: Repo, totalStatus: TotalStatus) => {
 export const getReposLines = async (repos: Repo[]): Promise<[string[], TotalStatus]> => {
   const totalStatus: TotalStatus = {ahead: 0, behind: 0, conflicted: 0, diverged: 0, modified: 0, stashed: 0}
 
-  return new Promise(resolve => (Promise.all(repos.map(r => repoLine(r, totalStatus))).then(lines => resolve([lines, totalStatus]))))
+  return new Promise(resolve => (Promise.all(repos.map(r => repoLine(r, totalStatus))).then(lines => resolve([lines, totalStatus])))) // eslint-disable-line no-promise-executor-return
 }
 
 export default class List extends Command {

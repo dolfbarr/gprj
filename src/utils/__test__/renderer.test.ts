@@ -194,7 +194,7 @@ describe('renderer', () => {
     })
 
     it('calculates index paddings', () => {
-      expect(lineAll(new Array(10).fill(message))).toEqual([
+      expect(lineAll(Array.from<string>({length: 10}).fill(message))).toEqual([
         `   1. ${message}`,
         `   2. ${message}`,
         `   3. ${message}`,

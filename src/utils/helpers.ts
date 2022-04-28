@@ -1,14 +1,14 @@
 /* istanbul ignore file */
 
 import {trimEnd} from 'lodash'
-import {sep} from 'path'
+import path from 'path'
 
 import {Repo} from './database'
 import {Entities, messages} from './messages'
 
 export const INDEX_MARK = '@'
 
-export const getBaseName = (dirPath: string) => dirPath.split(sep).pop() || dirPath
+export const getBaseName = (dirPath: string) => dirPath.split(path.sep).pop() || dirPath
 export const trimArray = (arr: string[]): string[] => arr.map(l => trimEnd(l)).filter(l => l)
 
 export const findRepositories = (marks: string[], repositories: Repo[]): [Repo, number][] =>

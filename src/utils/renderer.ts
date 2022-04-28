@@ -1,4 +1,4 @@
-import chalk, {Chalk} from 'chalk'
+import chalk from 'chalk'
 import * as figures from 'figures'
 
 import {getRepoStatus, RepoStatus, Statuses} from './helpers'
@@ -39,7 +39,7 @@ export enum Icons {
 
 export interface Icon {
   icon: string;
-  style: Chalk;
+  style: chalk.Chalk;
   label?: string;
 }
 
@@ -103,6 +103,14 @@ export const getIcon = (type: Icons, label?: string): string => {
   return icon.style(icon.icon + (label ? SPACE + chalk.underline(label) : NIL))
 }
 
+export const getStash = (stash: number) => {
+  if (stash > 0) {
+    return getIcon(Icons.Stash)
+  }
+
+  return SPACE
+}
+
 export const getStatuses = ({status, stash}: Pick<Statuses, 'status' | 'stash'>): string => {
   const currentStatuses = []
   const getAheadBehind = (status: Statuses['status']): string => {
@@ -117,16 +125,8 @@ export const getStatuses = ({status, stash}: Pick<Statuses, 'status' | 'stash'>)
       return SPACE
     }
   }
-  const getStash = (stash: number) => {
-    if (stash > 0) {
-      return getIcon(Icons.Stash)
-    }
 
-    return SPACE
-  }
-
-  currentStatuses.push(getStash(stash))
-  currentStatuses.push(getAheadBehind(status))
+  currentStatuses.push(getStash(stash), getAheadBehind(status))
 
   return currentStatuses.join(NIL)
 }
@@ -135,6 +135,7 @@ export const getModified = (modified: number, conflicted?: number) => {
   if (modified > 0) {
     return Number(conflicted) > 0 ? getIcon(Icons.Conflicted) : getIcon(Icons.Modified)
   }
+
   return NIL
 }
 
@@ -166,9 +167,9 @@ export const update = ({version: {current, latest}}: UpdateInfo) =>
   `Update available: ${chalk.dim(current)} ${getIcon(Icons.ArrowRight)} ${chalk.green(latest)}`
 
 export class Logger {
-  logger: (m?: string) => any
+  logger: (m?: string) => unknown
 
-  constructor(logger: (m?: string) => any) {
+  constructor(logger: (m?: string) => unknown) {
     this.logger = logger
   }
 

@@ -1,4 +1,4 @@
-import { ExitError } from '@oclif/core/lib/errors'
+import {ExitError} from '@oclif/core/lib/errors'
 import chalk from 'chalk'
 import mockFS from 'mock-fs'
 
@@ -36,7 +36,7 @@ describe('List Command', () => {
 
     jest
     .spyOn(process.stdout, 'write')
-    .mockImplementation((val: string) => {
+    .mockImplementation((val: any) => {
       result.push(val)
       return true
     });
