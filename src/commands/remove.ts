@@ -1,4 +1,4 @@
-import {Command, flags} from '@oclif/command'
+import {Command, Flags} from '@oclif/core'
 
 import {getDB, Repo} from '../utils/database'
 import {findRepositories, INDEX_MARK} from '../utils/helpers'
@@ -16,14 +16,14 @@ export default class Remove extends Command {
   static aliases = ['rm']
 
   static flags = {
-    help: flags.help({char: 'h'}),
+    help: Flags.help({char: 'h'}),
   }
 
   static strict = false
 
   async run() {
-    const {argv} = this.parse(Remove)
-    const {done} = new Logger(this.log)
+    const {argv} = await this.parse(Remove)
+    const {done} = new Logger(this.log.bind(this))
 
     if (argv.length === 0) {
       throw new Error(messages.errors.notProvided(Entities.Repo))
@@ -37,7 +37,7 @@ export default class Remove extends Command {
   }
 
   async catch(error: any) {
-    const {fail} = new Logger(this.log)
+    const {fail} = new Logger(this.log.bind(this))
 
     fail(error.message)
     this.exit(1)

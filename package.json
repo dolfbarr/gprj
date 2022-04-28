@@ -6,11 +6,13 @@
   "bin": {
     "gprj": "./bin/run"
   },
+  "main": "dist/index.js",
   "bugs": "https://github.com/dolfbarr/gprj/issues",
   "dependencies": {
-    "@oclif/command": "^1",
-    "@oclif/config": "^1",
-    "@oclif/plugin-help": "^3",
+    "@oclif/core": "^1",
+    "@oclif/plugin-help": "^5",
+    "@oclif/plugin-plugins": "^2.0.1",
+    "@oclif/plugin-version": "^1.0.4",
     "@types/execa": "2.0.0",
     "@types/listr": "0.14.4",
     "@types/lodash": "^4.14.171",
@@ -23,31 +25,31 @@
     "lodash": "^4.17.21",
     "lowdb": "1.0.0",
     "simple-git": "2.41.1",
-    "tslib": "^1",
     "update-notifier": "^5.1.0"
   },
   "devDependencies": {
-    "@oclif/dev-cli": "^1",
-    "@types/jest": "26.0.24",
+    "@types/jest": "^27",
     "@types/mock-fs": "^4.13.1",
     "@types/node": "^10",
     "cross-env": "7.0.3",
-    "eslint": "^5.13",
-    "eslint-config-oclif": "^3.1",
-    "eslint-config-oclif-typescript": "^0.1",
+    "eslint": "^7.32.0",
+    "eslint-config-oclif": "^4",
+    "eslint-config-oclif-typescript": "^1.0.2",
     "eslint-plugin-simple-import-sort": "^7.0.0",
     "eslint-plugin-sort-keys-fix": "^1.1.1",
-    "globby": "^10",
-    "jest": "27.0.6",
+    "globby": "^11",
+    "jest": "^27",
     "mock-fs": "^5.0.0",
+    "oclif": "^2",
     "pre-commit": "1.2.2",
     "rimraf": "^3.0.2",
-    "ts-jest": "^27.0.4",
-    "ts-node": "^8",
-    "typescript": "^3.3"
+    "shx": "^0.3.3",
+    "ts-jest": "^27",
+    "ts-node": "^10",
+    "typescript": "^4.4.3"
   },
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=12.0.0"
   },
   "files": [
     "/bin",
@@ -68,32 +70,38 @@
     "bitbucket"
   ],
   "license": "MIT",
-  "main": "lib/index.js",
   "oclif": {
-    "commands": "./lib/commands",
+    "commands": "./dist/commands",
     "bin": "gprj",
     "hooks": {
       "init": [
-        "./lib/hooks/init/db",
-        "./lib/hooks/init/update"
+        "./dist/hooks/init/db",
+        "./dist/hooks/init/update"
       ]
     },
     "plugins": [
-      "@oclif/plugin-help"
+      "@oclif/plugin-version"
+    ],
+    "additionalHelpFlags": [
+      "-h"
+    ],
+    "additionalVersionFlags": [
+      "-v"
     ]
   },
   "repository": "dolfbarr/gprj",
   "scripts": {
-    "postpack": "rimraf oclif.manifest.json",
+    "postpack": "shx rm -f oclif.manifest.json",
     "posttest": "yarn lint",
-    "prepack": "rimraf lib tsconfig.tsbuildinfo && tsc -b && oclif-dev manifest && oclif-dev readme",
+    "prepack": "yarn build && oclif manifest && oclif readme",
     "lint": "eslint . --ext .ts --config .eslintrc.js",
     "lint:fix": "yarn lint --fix",
     "test": "jest",
     "test:coverage": "jest --coverage",
-    "version": "oclif-dev readme && git add README.md"
+    "version": "oclif readme && git add README.md",
+    "build": "shx rm -rf dist && tsc -b"
   },
-  "types": "lib/index.d.ts",
+  "types": "dist/index.d.ts",
   "pre-commit": [
     "test"
   ]

@@ -1,7 +1,7 @@
 import chalk from 'chalk'
 import mockFS from 'mock-fs'
 
-import {mockDirs} from '../../test.helpers'
+import {handleExitError, mockDirs} from '../../test.helpers'
 import * as db from '../../utils/database'
 import {trimArray} from '../../utils/helpers'
 import Remove from '../remove'
@@ -53,7 +53,7 @@ describe('Remove Command', () => {
         await Remove.run([])
       } catch (error) {
         expect(trimArray(result)).toEqual(['  ✖ fail  Repository is not provided'])
-        expect(error.oclif.exit).toBe(1)
+        handleExitError(error)
       }
     })
 
@@ -62,7 +62,7 @@ describe('Remove Command', () => {
         await Remove.run(['unknown'])
       } catch (error) {
         expect(trimArray(result)).toEqual(['  ✖ fail  Repository does not exist: unknown'])
-        expect(error.oclif.exit).toBe(1)
+        handleExitError(error)
       }
     })
   })

@@ -1,11 +1,11 @@
-import {Hook} from '@oclif/config'
+import {Hook} from '@oclif/core'
 import updateNotifier from 'update-notifier'
 
 import {Alerts} from '../../utils/messages'
 import {Logger, update} from '../../utils/renderer'
 
 export const notify: Hook<'init'> = async function () {
-  const {fav} = new Logger(this.log)
+  const {fav} = new Logger(this.log.bind(this))
   const notifier = updateNotifier({pkg: {name: this.config.name, version: this.config.version}})
 
   if (notifier.update) {

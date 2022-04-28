@@ -1,8 +1,7 @@
 import chalk from 'chalk'
 import mockFS from 'mock-fs'
-import {mocked} from 'ts-jest/utils'
 
-import {mockDirs} from '../../test.helpers'
+import {handleExitError, mockDirs} from '../../test.helpers'
 import * as db from '../../utils/database'
 import * as git from '../../utils/git'
 import {trimArray} from '../../utils/helpers'
@@ -15,7 +14,7 @@ const PATH_TO_REPO = '/path/to/repo'
 jest.mock('../../utils/git', () => ({
   checkIsRepo: jest.fn().mockResolvedValue(true),
 }))
-const mockCheckIsRepo = mocked(git.checkIsRepo, true)
+const mockCheckIsRepo = jest.mocked(git.checkIsRepo, true)
 
 jest.mock('../../utils/database', () => ({
   getDB: jest.fn().mockImplementation(() => ({
@@ -25,7 +24,7 @@ jest.mock('../../utils/database', () => ({
     write: jest.fn().mockReturnThis(),
   })),
 }))
-const mockGetDB = mocked(db.getDB, true)
+const mockGetDB = jest.mocked(db.getDB, true)
 
 describe('Add Command', () => {
   let result: string[]
@@ -63,7 +62,7 @@ describe('Add Command', () => {
         await Add.run([])
       } catch (error) {
         expect(trimArray(result)).toEqual(['  ✖ fail  Path is not provided'])
-        expect(error.oclif.exit).toBe(1)
+        handleExitError(error)
       }
     })
 
@@ -75,7 +74,7 @@ describe('Add Command', () => {
         await Add.run([PATH_TO_REPO])
       } catch (error) {
         expect(trimArray(result)).toEqual(['  ✖ fail  Directory does not exist'])
-        expect(error.oclif.exit).toBe(1)
+        handleExitError(error)
       }
     })
 
@@ -87,7 +86,7 @@ describe('Add Command', () => {
         await Add.run([PATH_TO_REPO])
       } catch (error) {
         expect(trimArray(result)).toEqual(['  ✖ fail  Path should be a directory'])
-        expect(error.oclif.exit).toBe(1)
+        handleExitError(error)
       }
     })
 
@@ -98,7 +97,7 @@ describe('Add Command', () => {
         await Add.run([PATH_TO_REPO])
       } catch (error) {
         expect(trimArray(result)).toEqual(['  ✖ fail  Path is not a git repository'])
-        expect(error.oclif.exit).toBe(1)
+        handleExitError(error)
       }
     })
 
@@ -112,7 +111,7 @@ describe('Add Command', () => {
         await Add.run([PATH_TO_REPO])
       } catch (error) {
         expect(trimArray(result)).toEqual(['  ✖ fail  Repository already exists'])
-        expect(error.oclif.exit).toBe(1)
+        handleExitError(error)
       }
     })
   })

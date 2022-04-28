@@ -1,4 +1,4 @@
-import {Command, flags} from '@oclif/command'
+import {Command, Flags} from '@oclif/core'
 import chalk from 'chalk'
 import fs from 'fs'
 import simpleGit from 'simple-git'
@@ -73,12 +73,12 @@ All repositories:
   static aliases = ['ls']
 
   static flags = {
-    help: flags.help({char: 'h'}),
+    help: Flags.help({char: 'h'}),
   }
 
   async run() {
-    this.parse(List)
-    const {info, fav, empty, lineAll, heading} = new Logger(this.log)
+    await this.parse(List)
+    const {info, fav, empty, lineAll, heading} = new Logger(this.log.bind(this))
 
     const db = await getDB(this.config.dataDir)
     const repos = db.get('repositories').value()

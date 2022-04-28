@@ -1,3 +1,4 @@
+import { ExitError } from '@oclif/core/lib/errors'
 import mockFS from 'mock-fs'
 import path from 'path'
 
@@ -9,4 +10,10 @@ export const mockDirs = (dirs = {}) => {
     'tsconfig.json': mockFS.load(path.resolve(__dirname, '../tsconfig.json')),
     ...dirs,
   }, {createCwd: false})
+}
+
+export const handleExitError = (err: unknown) => {
+  if (err instanceof ExitError) {
+    expect(err.oclif.exit).toBe(1)
+  }
 }

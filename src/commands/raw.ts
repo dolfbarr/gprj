@@ -1,4 +1,4 @@
-import {Command, flags} from '@oclif/command'
+import {Command, Flags} from '@oclif/core'
 import execa from 'execa'
 import Listr from 'listr'
 
@@ -24,16 +24,16 @@ export default class Raw extends Command {
   static aliases = ['r']
 
   static flags = {
-    execute: flags.string({char: 'x', description: messages.descriptions.execute(), required: true}),
-    help: flags.help({char: 'h'}),
-    timeout: flags.integer({char: 't', default: DEFAULT_TIMEOUT, description: messages.descriptions.timeout()}),
+    execute: Flags.string({char: 'x', description: messages.descriptions.execute(), required: true}),
+    help: Flags.help({char: 'h'}),
+    timeout: Flags.integer({char: 't', default: DEFAULT_TIMEOUT, description: messages.descriptions.timeout()}),
   }
 
   static strict = false
 
   async run() {
-    const {argv, flags} = this.parse(Raw)
-    const {done, empty} = new Logger(this.log)
+    const {argv, flags} = await this.parse(Raw)
+    const {done, empty} = new Logger(this.log.bind(this))
 
     if (argv.length === 0) {
       throw new Error(messages.errors.notProvided(Entities.Repo))
@@ -71,7 +71,7 @@ export default class Raw extends Command {
   }
 
   async catch(error: any) {
-    const {fail, empty} = new Logger(this.log)
+    const {fail, empty} = new Logger(this.log.bind(this))
 
     empty()
     fail(error.message)

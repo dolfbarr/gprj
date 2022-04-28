@@ -1,6 +1,6 @@
+import { ExitError } from '@oclif/core/lib/errors'
 import chalk from 'chalk'
 import mockFS from 'mock-fs'
-import {mocked} from 'ts-jest/utils'
 
 import {mockDirs} from '../../test.helpers'
 import * as db from '../../utils/database'
@@ -15,8 +15,8 @@ jest.mock('../../utils/git', () => ({
   stashList: jest.fn(),
   status: jest.fn(),
 }))
-const mockedStatus = mocked(git.status, true)
-const mockedStashList = mocked(git.stashList, true)
+const mockedStatus = jest.mocked(git.status, true)
+const mockedStashList = jest.mocked(git.stashList, true)
 
 jest.mock('../../utils/database', () => ({
   getDB: jest.fn().mockImplementation(() => ({
@@ -24,7 +24,7 @@ jest.mock('../../utils/database', () => ({
     value: jest.fn(),
   })),
 }))
-const mockGetDB = mocked(db.getDB, true)
+const mockGetDB = jest.mocked(db.getDB, true)
 
 describe('List Command', () => {
   let result: string[]
@@ -104,7 +104,10 @@ describe('List Command', () => {
       await List.run([])
     } catch (error) {
       expect(trimArray(result)).toEqual(['  ℹ info  No repositories has been found', "  ♥  You can use 'add' command to add a repository"])
-      expect(error.oclif.exit).toBe(0)
+
+      if (error instanceof ExitError) {
+        expect(error.oclif.exit).toBe(0)
+      }
     }
   })
 })

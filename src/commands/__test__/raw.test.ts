@@ -1,9 +1,8 @@
 import chalk from 'chalk'
 import execa from 'execa'
 import mockFS from 'mock-fs'
-import {mocked} from 'ts-jest/utils'
 
-import {mockDirs} from '../../test.helpers'
+import {handleExitError, mockDirs} from '../../test.helpers'
 import * as db from '../../utils/database'
 import {trimArray} from '../../utils/helpers'
 import Raw from '../raw'
@@ -11,7 +10,7 @@ import Raw from '../raw'
 chalk.level = 0
 
 jest.mock('execa')
-const mockedExeca = mocked(execa, true)
+const mockedExeca = jest.mocked(execa, true)
 
 jest.mock('../../utils/database', () => ({
   getDB: jest.fn().mockImplementation(() => ({
@@ -60,7 +59,7 @@ describe('Raw Command', () => {
         await Raw.run(['-x=pwd'])
       } catch (error) {
         expect(trimArray(result)).toEqual(['  ✖ fail  Repository is not provided'])
-        expect(error.oclif.exit).toBe(1)
+        handleExitError(error)
       }
     })
 
@@ -69,7 +68,7 @@ describe('Raw Command', () => {
         await Raw.run(['unknown', '-x=pwd'])
       } catch (error) {
         expect(trimArray(result)).toEqual(['  ✖ fail  Repository does not exist: unknown'])
-        expect(error.oclif.exit).toBe(1)
+        handleExitError(error)
       }
     })
 
@@ -80,7 +79,7 @@ describe('Raw Command', () => {
         expect(trimArray(result)[0]).toContain('  ✖ fail  Missing required flag:')
         expect(trimArray(result)[0]).toContain(' -x, --execute EXECUTE')
         expect(trimArray(result)[0]).toContain('See more help with --help')
-        expect(error.oclif.exit).toBe(1)
+        handleExitError(error)
       }
     })
 
@@ -90,7 +89,7 @@ describe('Raw Command', () => {
         await Raw.run(['repo', '-x=pwd'])
       } catch (error) {
         expect(trimArray(result)).toEqual(['  ✖ fail  Something went wrong'])
-        expect(error.oclif.exit).toBe(1)
+        handleExitError(error)
       }
     })
   })

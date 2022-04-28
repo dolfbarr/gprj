@@ -1,4 +1,5 @@
 
+import { CLIError } from '@oclif/core/lib/errors'
 import chalk from 'chalk'
 
 import {Repo} from '../database'
@@ -33,7 +34,9 @@ describe('helpers', () => {
       try {
         findRepositories(['unknown'], mockedRepositories)
       } catch (error) {
-        expect(error.message).toEqual('Repository does not exist: unknown')
+        if (error instanceof CLIError){
+          expect(error.message).toEqual('Repository does not exist: unknown')
+        }
       }
     })
 
@@ -41,7 +44,9 @@ describe('helpers', () => {
       try {
         findRepositories(['@unknown'], mockedRepositories)
       } catch (error) {
-        expect(error.message).toEqual('Repository does not exist: @unknown')
+        if (error instanceof CLIError){
+          expect(error.message).toEqual('Repository does not exist: @unknown')
+        }
       }
     })
   })

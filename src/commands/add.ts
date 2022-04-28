@@ -1,4 +1,4 @@
-import {Command, flags} from '@oclif/command'
+import {Command, Flags} from '@oclif/core'
 import fs from 'fs'
 import {resolve} from 'path'
 import simpleGit from 'simple-git'
@@ -22,14 +22,14 @@ export default class Add extends Command {
   ]
 
   static flags = {
-    help: flags.help({char: 'h'}),
+    help: Flags.help({char: 'h'}),
   }
 
   static strict = false
 
   async run() {
-    const {argv} = this.parse(Add)
-    const {done} = new Logger(this.log)
+    const {argv} = await this.parse(Add)
+    const {done} = new Logger(this.log.bind(this))
 
     if (argv.length === 0) {
       throw new Error(messages.errors.notProvided(Entities.Path))
@@ -65,7 +65,7 @@ export default class Add extends Command {
   }
 
   async catch(error: any) {
-    const {fail} = new Logger(this.log)
+    const {fail} = new Logger(this.log.bind(this))
 
     fail(error.message)
     this.exit(1)
