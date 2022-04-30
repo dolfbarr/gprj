@@ -30,7 +30,7 @@ $ npm install -g gprj
 $ gprj COMMAND
 running command...
 $ gprj (--version|-v)
-gprj/1.0.2 darwin-x64 node-v14.17.3
+gprj/1.1.0 darwin-x64 node-v14.17.3
 $ gprj --help [COMMAND]
 USAGE
   $ gprj COMMAND
@@ -67,7 +67,7 @@ EXAMPLES
    ✔ done  Repository has been successfully added
 ```
 
-_See code: [dist/commands/add.ts](https://github.com/dolfbarr/gprj/blob/v1.0.2/dist/commands/add.ts)_
+_See code: [dist/commands/add.ts](https://github.com/dolfbarr/gprj/blob/v1.1.0/dist/commands/add.ts)_
 
 ## `gprj list`
 
@@ -92,7 +92,7 @@ EXAMPLES
    1. gprj (main)
 ```
 
-_See code: [dist/commands/list.ts](https://github.com/dolfbarr/gprj/blob/v1.0.2/dist/commands/list.ts)_
+_See code: [dist/commands/list.ts](https://github.com/dolfbarr/gprj/blob/v1.1.0/dist/commands/list.ts)_
 
 ## `gprj ls`
 
@@ -169,7 +169,7 @@ EXAMPLES
    ✔ done  All commands has been successfully executed
 ```
 
-_See code: [dist/commands/raw.ts](https://github.com/dolfbarr/gprj/blob/v1.0.2/dist/commands/raw.ts)_
+_See code: [dist/commands/raw.ts](https://github.com/dolfbarr/gprj/blob/v1.1.0/dist/commands/raw.ts)_
 
 ## `gprj remove`
 
@@ -193,7 +193,7 @@ EXAMPLES
    ✔ done  All repositories have been successfully removed
 ```
 
-_See code: [dist/commands/remove.ts](https://github.com/dolfbarr/gprj/blob/v1.0.2/dist/commands/remove.ts)_
+_See code: [dist/commands/remove.ts](https://github.com/dolfbarr/gprj/blob/v1.1.0/dist/commands/remove.ts)_
 
 ## `gprj rm`
 
