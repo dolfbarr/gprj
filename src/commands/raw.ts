@@ -1,5 +1,6 @@
 import {Command, Flags} from '@oclif/core'
 import execa from 'execa'
+import fs from 'fs'
 import Listr from 'listr'
 
 import {getDB, Repo} from '../utils/database'
@@ -51,6 +52,10 @@ export default class Raw extends Command {
         findRepositories(argv, currentRepos.value())
         .map(([repo]: [Repo, number]) => ({
           task: async () =>  {
+            if (!fs.existsSync(repo.path)) {
+              return Promise.reject(new Error(messages.errors.dirNotExist()))
+            }
+
             const subprocess =  execa(command, commandArgs, {cwd: repo.path, timeout: flags.timeout})
 
             try {
@@ -60,7 +65,7 @@ export default class Raw extends Command {
             }
           },
           title: getBaseName(repo.path),
-        })), {concurrent: true, exitOnError: false, renderer: 'silent'})
+        })), {concurrent: true, exitOnError: false})
 
     await tasks.run().catch(error => {
       throw new Error(error.message)

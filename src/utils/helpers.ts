@@ -7,24 +7,27 @@ import {Repo} from './database'
 import {Entities, messages} from './messages'
 
 export const INDEX_MARK = '@'
+export const GROUP_ALL = `${INDEX_MARK}all`
 
 export const getBaseName = (dirPath: string) => dirPath.split(path.sep).pop() || dirPath
 export const trimArray = (arr: string[]): string[] => arr.map(l => trimEnd(l)).filter(l => l)
 
 export const findRepositories = (marks: string[], repositories: Repo[]): [Repo, number][] =>
-  marks.map((mark: string): [Repo, number] => {
-    const foundRepoIndex = mark.startsWith(INDEX_MARK) ?
-      Number(mark.slice(1)) - 1 :
-      repositories.findIndex(r => r.path === mark || getBaseName(r.path) === mark)
+  marks[0] === GROUP_ALL ?
+    repositories.map((r, index) => [r, index + 1]) :
+    marks.map((mark: string): [Repo, number] => {
+      const foundRepoIndex = mark.startsWith(INDEX_MARK) ?
+        Number(mark.slice(1)) - 1 :
+        repositories.findIndex(r => r.path === mark || getBaseName(r.path) === mark)
 
-    const foundRepo = repositories?.[foundRepoIndex]
+      const foundRepo = repositories?.[foundRepoIndex]
 
-    if (!foundRepo) {
-      throw new Error(messages.errors.notExist(Entities.Repo) + ': ' + mark)
-    }
+      if (!foundRepo) {
+        throw new Error(messages.errors.notExist(Entities.Repo) + ': ' + mark)
+      }
 
-    return [foundRepo, foundRepoIndex + 1]
-  })
+      return [foundRepo, foundRepoIndex + 1]
+    })
 
 export interface Statuses {
   status: {ahead: number; behind: number};

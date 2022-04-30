@@ -30,6 +30,10 @@ describe('helpers', () => {
       expect(findRepositories(['@1'], mockedRepositories)).toEqual([[mockedRepositories[0], 1]])
     })
 
+    it('finds all repositories', () => {
+      expect(findRepositories(['@all'], mockedRepositories)).toEqual(mockedRepositories.map((r, i) => [r, i + 1]))
+    })
+
     it('fails to find a repository', () => {
       try {
         findRepositories(['unknown'], mockedRepositories)

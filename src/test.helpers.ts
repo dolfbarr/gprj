@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 import {ExitError} from '@oclif/core/lib/errors'
 import mockFS from 'mock-fs'
 import path from 'path'

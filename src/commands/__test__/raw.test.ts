@@ -15,7 +15,7 @@ const mockedExeca = jest.mocked(execa, true)
 jest.mock('../../utils/database', () => ({
   getDB: jest.fn().mockImplementation(() => ({
     get: jest.fn().mockReturnThis(),
-    value: () => [{dateAdded: 0, path: 'repo'}, {dateAdded: 0,  path: 'prj'}, {dateAdded: 0,  path: 'repo2'}] as db.Repo[],
+    value: () => [{dateAdded: 0, path: 'repo'}, {dateAdded: 0,  path: 'prj'}, {dateAdded: 0,  path: 'repo2'}, {dateAdded: 0,  path: 'repo3'}] as db.Repo[],
   })),
 }))
 
@@ -68,6 +68,15 @@ describe('Raw Command', () => {
         await Raw.run(['unknown', '-x=pwd'])
       } catch (error) {
         expect(trimArray(result)).toEqual(['  ✖ fail  Repository does not exist: unknown'])
+        handleExitError(error)
+      }
+    })
+
+    it('no dir found', async () => {
+      try {
+        await Raw.run(['repo3', '-x=pwd'])
+      } catch (error) {
+        expect(trimArray(result)).toEqual(['  ✖ fail  Something went wrong'])
         handleExitError(error)
       }
     })
