@@ -12,7 +12,7 @@ jest.mock('../../utils/database', () => ({
   getDB: jest.fn().mockImplementation(() => ({
     get: jest.fn().mockReturnThis(),
     remove: jest.fn().mockReturnThis(),
-    value: () => [{dateAdded: 0, path: 'repo'}, {date: 0,  path: 'prj'}, {date: 0,  path: 'repo2'}] as db.Repo[],
+    value: () => [{dateAdded: 0, path: 'repo'}, {dateAdded: 0,  path: 'prj'}, {dateAdded: 0,  path: 'repo2'}] as db.Repo[],
     write: jest.fn().mockReturnThis(),
   })),
 }))

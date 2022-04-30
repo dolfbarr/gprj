@@ -45,7 +45,7 @@ describe('List Command', () => {
     (mockedStashList as jest.MockInstance<any, any>).mockResolvedValue({total: 0});
     (mockGetDB as jest.MockInstance<any, any>).mockImplementation(() => ({
       get: jest.fn().mockReturnThis(),
-      value: () => [{dateAdded: 0, path: 'repo'}, {dateAdded: 0, path: 'prj'}] as db.Repo[],
+      value: () => [{dateAdded: 0, path: 'repo'}, {dateAdded: 0, path: 'prj'}, {dateAdded: 0, path: 'removed'}] as db.Repo[],
     }))
   })
 
@@ -55,43 +55,48 @@ describe('List Command', () => {
 
   it('shows repos', async () => {
     await List.run([])
-    expect(trimArray(result)).toEqual(['All repositories:', '  1.    repo (main)', '  2.    prj (main)'])
+    expect(trimArray(result)).toEqual(['All repositories:', '  1.    repo (main)', '  2.    prj (main)', '  3.    removed'])
+  })
+
+  it('shows repos', async () => {
+    await List.run([])
+    expect(trimArray(result)).toEqual(['All repositories:', '  1.    repo (main)', '  2.    prj (main)', '  3.    removed'])
   })
 
   it('shows repos with ahead info', async () => {
     (mockedStatus as jest.MockInstance<any, any>).mockResolvedValue({...statusMock, ahead: 10})
     await List.run([])
-    expect(trimArray(result)).toEqual(['All repositories:', '  1.  ↑ repo (main)', '  2.  ↑ prj (main)', '  ℹ info  2 ↑ (ahead)'])
+    expect(trimArray(result)).toEqual(['All repositories:', '  1.  ↑ repo (main)', '  2.  ↑ prj (main)', '  3.    removed', '  ℹ info  2 ↑ (ahead)'])
   })
 
   it('shows repos with behind info', async () => {
     (mockedStatus as jest.MockInstance<any, any>).mockResolvedValue({...statusMock, behind: 10})
     await List.run([])
-    expect(trimArray(result)).toEqual(['All repositories:', '  1.  ↓ repo (main)', '  2.  ↓ prj (main)', '  ℹ info  2 ↓ (behind)'])
+    expect(trimArray(result)).toEqual(['All repositories:', '  1.  ↓ repo (main)', '  2.  ↓ prj (main)', '  3.    removed', '  ℹ info  2 ↓ (behind)'])
   })
 
   it('shows repos with diverged info', async () => {
     (mockedStatus as jest.MockInstance<any, any>).mockResolvedValue({...statusMock, ahead: 10, behind: 10})
     await List.run([])
-    expect(trimArray(result)).toEqual(['All repositories:', '  1.  ⚠ repo (main)', '  2.  ⚠ prj (main)', '  ℹ info  2 ⚠ (diverged)'])
+    expect(trimArray(result)).toEqual(['All repositories:', '  1.  ⚠ repo (main)', '  2.  ⚠ prj (main)', '  3.    removed', '  ℹ info  2 ⚠ (diverged)'])
   })
 
   it('shows repos with modified info', async () => {
     (mockedStatus as jest.MockInstance<any, any>).mockResolvedValue({...statusMock, files: [{path: '/path/to/file'}]})
     await List.run([])
-    expect(trimArray(result)).toEqual(['All repositories:', '  1.    repo* (main)', '  2.    prj* (main)', '  ℹ info  2 * (modified)'])
+    expect(trimArray(result)).toEqual(['All repositories:', '  1.    repo* (main)', '  2.    prj* (main)', '  3.    removed', '  ℹ info  2 * (modified)'])
   })
 
   it('shows repos with conflicted info', async () => {
     (mockedStatus as jest.MockInstance<any, any>).mockResolvedValue({...statusMock, conflicted: ['/path/to/file'], files: [{path: '/path/to/file'}]})
     await List.run([])
-    expect(trimArray(result)).toEqual(['All repositories:', '  1.    repo* (main)', '  2.    prj* (main)', '  ℹ info  2 * (conflicted)'])
+    expect(trimArray(result)).toEqual(['All repositories:', '  1.    repo* (main)', '  2.    prj* (main)', '  3.    removed', '  ℹ info  2 * (conflicted)'])
   })
 
   it('shows repos with stashed info', async () => {
     (mockedStashList as jest.MockInstance<any, any>).mockResolvedValue({total: 10})
     await List.run([])
-    expect(trimArray(result)).toEqual(['All repositories:', '  1. $  repo (main)', '  2. $  prj (main)',  '  ℹ info  2 $ (stashed)'])
+    expect(trimArray(result)).toEqual(['All repositories:', '  1. $  repo (main)', '  2. $  prj (main)', '  3.    removed',  '  ℹ info  2 $ (stashed)'])
   })
 
   it('shows placeholders with no repos', async () => {

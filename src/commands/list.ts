@@ -5,9 +5,9 @@ import simpleGit from 'simple-git'
 
 import {getDB, Repo} from '../utils/database'
 import {stashList, status} from '../utils/git'
-import {getBaseName, getRepoStatus, RepoStatus} from '../utils/helpers'
+import {getBaseName, getRepoStatus, RepoStatus, Statuses} from '../utils/helpers'
 import {EntitiesPlural, messages} from '../utils/messages'
-import {getModified, getStatuses, Icons, list, Logger} from '../utils/renderer'
+import {getModified, getStatuses, Icons, list, Logger, NIL} from '../utils/renderer'
 
 export interface TotalStatus {
   ahead: number;
@@ -18,9 +18,13 @@ export interface TotalStatus {
   conflicted: number;
 }
 
+export const renderRepoLine = ({stash, status, path, modified, currentStatus}: {path: string, modified: string, currentStatus: string | null} & Pick<Statuses, 'status' | 'stash'>) => {
+  return `${getStatuses({stash, status})} ${getBaseName(path)}${modified} ${currentStatus && chalk.magenta(`(${currentStatus})`)}`
+}
+
 export const repoLine = async (r: Repo, totalStatus: TotalStatus) => {
   if (!fs.existsSync(r.path)) {
-    return `${chalk.red(r.path)}`
+    return `${chalk.red(renderRepoLine({currentStatus: NIL, modified: NIL, path: r.path, stash: 0, status: {ahead: 0, behind: 0}}))}`
   }
 
   const git = await simpleGit(r.path)
@@ -51,7 +55,7 @@ export const repoLine = async (r: Repo, totalStatus: TotalStatus) => {
 
   const modified = getModified(currentStatus.files.length, currentStatus.conflicted.length)
 
-  return `${getStatuses({stash: currentStashList.total, status: gitStatus})} ${getBaseName(r.path)}${modified} ${chalk.magenta(`(${currentStatus.current})`)}`
+  return renderRepoLine({currentStatus: currentStatus.current, modified, path: r.path, stash: currentStashList.total, status: gitStatus})
 }
 
 export const getReposLines = async (repos: Repo[]): Promise<[string[], TotalStatus]> => {

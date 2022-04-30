@@ -60,7 +60,7 @@ export default class Raw extends Command {
             }
           },
           title: getBaseName(repo.path),
-        })), {concurrent: true, exitOnError: false})
+        })), {concurrent: true, exitOnError: false, renderer: 'silent'})
 
     await tasks.run().catch(error => {
       throw new Error(error.message)
