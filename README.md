@@ -30,7 +30,7 @@ $ npm install -g gprj
 $ gprj COMMAND
 running command...
 $ gprj (--version|-v)
-gprj/1.0.0 darwin-x64 node-v14.17.3
+gprj/1.0.1 darwin-x64 node-v14.17.3
 $ gprj --help [COMMAND]
 USAGE
   $ gprj COMMAND
@@ -39,7 +39,183 @@ USAGE
 <!-- usagestop -->
 # Commands
 <!-- commands -->
+* [`gprj add`](#gprj-add)
+* [`gprj list`](#gprj-list)
+* [`gprj ls`](#gprj-ls)
+* [`gprj r`](#gprj-r)
+* [`gprj raw`](#gprj-raw)
+* [`gprj remove`](#gprj-remove)
+* [`gprj rm`](#gprj-rm)
 * [`gprj version`](#gprj-version)
+
+## `gprj add`
+
+adds repository to local database
+
+```
+USAGE
+  $ gprj add [-h]
+
+FLAGS
+  -h, --help  Show CLI help.
+
+DESCRIPTION
+  adds repository to local database
+
+EXAMPLES
+  $ gprj add /path/to/repo
+   ✔ done  Repository has been successfully added
+```
+
+_See code: [dist/commands/add.ts](https://github.com/dolfbarr/gprj/blob/v1.0.1/dist/commands/add.ts)_
+
+## `gprj list`
+
+lists all repositories
+
+```
+USAGE
+  $ gprj list [-h]
+
+FLAGS
+  -h, --help  Show CLI help.
+
+DESCRIPTION
+  lists all repositories
+
+ALIASES
+  $ gprj ls
+
+EXAMPLES
+  $ gprj list
+  All repositories:
+   1. gprj (main)
+```
+
+_See code: [dist/commands/list.ts](https://github.com/dolfbarr/gprj/blob/v1.0.1/dist/commands/list.ts)_
+
+## `gprj ls`
+
+lists all repositories
+
+```
+USAGE
+  $ gprj ls [-h]
+
+FLAGS
+  -h, --help  Show CLI help.
+
+DESCRIPTION
+  lists all repositories
+
+ALIASES
+  $ gprj ls
+
+EXAMPLES
+  $ gprj list
+  All repositories:
+   1. gprj (main)
+```
+
+## `gprj r`
+
+execute a shell command in repo path
+
+```
+USAGE
+  $ gprj r -x <value> [-h] [-t <value>]
+
+FLAGS
+  -h, --help             Show CLI help.
+  -t, --timeout=<value>  [default: 5000] timeout in ms
+  -x, --execute=<value>  (required) command to execute
+
+DESCRIPTION
+  execute a shell command in repo path
+
+ALIASES
+  $ gprj r
+
+EXAMPLES
+  $ gprj raw  /path/to/repo1 /path/to/repo2 --execute='yarn test' --timeout=2000
+   ✔ repo1
+   ✔ repo2
+   ✔ done  All commands has been successfully executed
+```
+
+## `gprj raw`
+
+execute a shell command in repo path
+
+```
+USAGE
+  $ gprj raw -x <value> [-h] [-t <value>]
+
+FLAGS
+  -h, --help             Show CLI help.
+  -t, --timeout=<value>  [default: 5000] timeout in ms
+  -x, --execute=<value>  (required) command to execute
+
+DESCRIPTION
+  execute a shell command in repo path
+
+ALIASES
+  $ gprj r
+
+EXAMPLES
+  $ gprj raw  /path/to/repo1 /path/to/repo2 --execute='yarn test' --timeout=2000
+   ✔ repo1
+   ✔ repo2
+   ✔ done  All commands has been successfully executed
+```
+
+_See code: [dist/commands/raw.ts](https://github.com/dolfbarr/gprj/blob/v1.0.1/dist/commands/raw.ts)_
+
+## `gprj remove`
+
+removes repository from local database
+
+```
+USAGE
+  $ gprj remove [-h]
+
+FLAGS
+  -h, --help  Show CLI help.
+
+DESCRIPTION
+  removes repository from local database
+
+ALIASES
+  $ gprj rm
+
+EXAMPLES
+  $ gprj remove /path/to/repo @2 repo
+   ✔ done  All repositories have been successfully removed
+```
+
+_See code: [dist/commands/remove.ts](https://github.com/dolfbarr/gprj/blob/v1.0.1/dist/commands/remove.ts)_
+
+## `gprj rm`
+
+removes repository from local database
+
+```
+USAGE
+  $ gprj rm [-h]
+
+FLAGS
+  -h, --help  Show CLI help.
+
+DESCRIPTION
+  removes repository from local database
+
+ALIASES
+  $ gprj rm
+
+EXAMPLES
+  $ gprj remove /path/to/repo @2 repo
+   ✔ done  All repositories have been successfully removed
+```
 
 ## `gprj version`
 

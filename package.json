@@ -1,7 +1,7 @@
 {
   "name": "gprj",
   "description": "Clean & simple CLI git multi project manager",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "Dolf Barr @dolfbarr",
   "bin": {
     "gprj": "./bin/run"
@@ -44,10 +44,10 @@
     "pre-commit": "1.2.2",
     "rimraf": "^3.0.2",
     "shx": "^0.3.3",
+    "ts-jest": "^27",
     "ts-node": "^10.2.1",
     "tslib": "^2.3.1",
-    "typescript": "^4.4.3",
-    "ts-jest": "^27"
+    "typescript": "^4.4.3"
   },
   "engines": {
     "node": ">=12.0.0"
