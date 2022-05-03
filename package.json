@@ -40,6 +40,7 @@
     "globby": "^11",
     "jest": "^27",
     "mock-fs": "^5.0.0",
+    "np": "*",
     "oclif": "^2",
     "pre-commit": "1.2.2",
     "rimraf": "^3.0.2",
@@ -100,10 +101,14 @@
     "test": "jest",
     "test:coverage": "jest --coverage",
     "version": "oclif readme && git add README.md",
-    "build": "shx rm -rf dist && tsc -b"
+    "build": "shx rm -rf dist && tsc -b",
+    "release": "np"
   },
   "types": "dist/index.d.ts",
   "pre-commit": [
     "test"
-  ]
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  }
 }
