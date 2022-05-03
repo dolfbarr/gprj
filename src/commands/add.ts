@@ -76,7 +76,7 @@ export default class Add extends Command {
         return error
       })))
     .then(newRepos =>
-      db.get('repositories').push(...newRepos).write())
+      db.get('repositories').push(...newRepos.filter(r => typeof r !== 'string')).write())
   }
 
   async catch(error: any) {
