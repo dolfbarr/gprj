@@ -48,12 +48,12 @@ describe('Add Command', () => {
 
   it('adds repo', async () => {
     await Add.run([PATH_TO_REPO])
-    expect(trimArray(result)).toEqual(['  ✔ done  Repository has been successfully added'])
+    expect(trimArray(result)).toEqual(['  ✔ done  Repository has been successfully added: repo'])
   })
 
   it('adds multiple repos', async () => {
     await Add.run([PATH_TO_REPO, PATH_TO_REPO + '1'])
-    expect(trimArray(result)).toEqual(['  ✔ done  All repositories have been successfully added'])
+    expect(trimArray(result)).toEqual(['  ✔ done  Repository has been successfully added: repo', '  ✔ done  Repository has been successfully added: repo1'])
   })
 
   describe('fails with', () => {
@@ -104,7 +104,9 @@ describe('Add Command', () => {
     it('existing repo', async () => {
       (mockGetDB as jest.MockInstance<any, any>).mockImplementation(() => ({
         get: jest.fn().mockReturnThis(),
+        push: jest.fn().mockReturnThis(),
         value: () => [{dateAdded: 0, path: PATH_TO_REPO}],
+        write: jest.fn().mockReturnThis(),
       }))
 
       try {
