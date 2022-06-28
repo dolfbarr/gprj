@@ -11,3 +11,4 @@ test/gprj_db.json
 /.vscode
 /.idea
 /coverage
+.DS_store
